@@ -1,0 +1,38 @@
+.vocaItem {
+  display: inline-block;
+  list-style-type: none;
+  border: 3px solid black;
+  position: relative;
+  width: 23.75rem; /*380px*/
+  height: 8.5rem; /*136px*/
+  cursor: pointer;
+}
+
+.container {
+  padding: 2rem 1.5rem; /*32px, 24px*/
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.25rem;
+}
+
+.remove {
+  padding: 0.625rem;
+  position: absolute;
+  font-size: 2rem;
+  top: 0;
+  right: 0;
+}
+
+.remove:hover {
+  scale: 1.2;
+  transition: all 0.4s ease-in-out;
+}
