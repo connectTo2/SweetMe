@@ -11,7 +11,9 @@ class VocaItem extends Component {
           <h3 class="${title}">개발용어</h3>
           <p class="${description}">개발 용어만 모아둔 단어장. 세계 최고의 개발자가 될거야</p>
         </a>
-        <button class="${remove}">🗑</button>
+        <button class="${remove}">
+          <box-icon type='solid' name='trash'></box-icon>
+        </button>
       </li>`;
   }
 }
