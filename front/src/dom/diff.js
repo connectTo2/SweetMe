@@ -69,14 +69,14 @@ const updateElement = ($parentNode, $oldNode, $newNode) => {
 };
 
 // 이전DOM과 새롭게 교체할 DOM을 받아서 비교한다.
-const diff = (OldDOM, NewDOM) => {
-  const [$OldDOMNodes, $NewDOMNodes] = [[...OldDOM.childNodes], [...NewDOM.childNodes]];
+const diff = ($OldDOM, $NewDOM) => {
+  const [OldDOMNodes, NewDOMNodes] = [[...$OldDOM.childNodes], [...$NewDOM.childNodes]];
 
-  const maxLength = Math.max($OldDOMNodes.length, $NewDOMNodes.length);
+  const maxLength = Math.max(OldDOMNodes.length, NewDOMNodes.length);
 
   for (let i = 0; i < maxLength; i++) {
     // 여기서 비교하면서 DOM을 교체해야한다.
-    updateElement(OldDOM, $OldDOMNodes[i], $NewDOMNodes[i]);
+    updateElement($OldDOM, OldDOMNodes[i], NewDOMNodes[i]);
   }
 };
 
