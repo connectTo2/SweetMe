@@ -1,4 +1,4 @@
 import render from './render';
-import eventHodler from './eventHolder';
+import eventHolder from './eventHolder';
 
-export { render, eventHodler };
+export { render, eventHolder };

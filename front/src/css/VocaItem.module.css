@@ -1,0 +1,46 @@
+.vocaItem {
+  display: inline-block;
+  list-style-type: none;
+  border: 3px solid black;
+  position: relative;
+  width: 23.75rem; /*380px*/
+  height: 8.5rem; /*136px*/
+  cursor: pointer;
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 2rem 1.5rem 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.25rem;
+}
+
+.remove {
+  cursor: pointer;
+  display: none;
+  padding: 0.625rem;
+  position: absolute;
+  font-size: 1.5rem;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  border: none;
+  background: none;
+}
+
+/* li에 hover 되었을 때 button display block */
+.vocaItem:hover .remove {
+  display: block;
+}
