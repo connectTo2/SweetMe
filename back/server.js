@@ -1,24 +1,24 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const { signIn, signInSuccess } = require('./controller/auth');
 
 const app = express();
-require('dotenv').config();
+dotenv.config();
 
-// 기본 설정
+app.use(express.static('public'));
+
+// <클라이언트에서 서버로 요청이 가능하도록 하는 기본 설정>
+// client와 server간의 통신을 위해 JSON 형식을 다룰거기 때문에 JSON 미들웨어 설치
 app.use(express.json());
-app.use(cookieParser()); // 쿠키를 사용해서 jsonwebtoken 사용
+// 쿠키를 사용해 jwt를 사용할 것이기 때문에 cookie-parser 설정
+app.use(cookieParser());
 
-// TODO:
-// 사용자가 ID/Password를 제공하고 로그인 요청을 던지면
-// 서버는 사용자 정보를 검증하고 암호화된 토큰을 생성 ( Access Token / Refresh Token)
-// 사용자에게 토큰을 보내고 사용자는 토큰을 저장.
-// 이후 요청부터는 사용자가 HTTP 헤더에 토큰을 담아 보냄. 속성 === authorization
-// app.post('/signin');
-// app.get('/accesstoken');
-// app.get('/refreshtoken');
-// app.get('/signin/success');
-// app.post('/logout');
+app.post('/signIn', signIn);
+// signin이 성공했을 때 사용자가 요청을 하면 현재 쿠키에 담겨있는 AccessToken을 가지고 사용자 정보를 parsing하여 전달해주는 역할
+app.get('/signIn/success', signInSuccess);
+// logout을 하면 현재 쿠키에 담겨져 있는 AccessToken을 제거하는 역할
 
 app.listen(process.env.PORT, () => {
-  console.log(`server is running on ${process.env.PORT}`);
+  console.log(`server is on ${process.env.PORT}`);
 });
