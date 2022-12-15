@@ -12,7 +12,7 @@ class VocaList extends Component {
 
         <li class="${plusItem}">
           <a class="${link}" href="#">
-            <span class="${plusIcon}"><i class="bx bx-plus"></i></span>
+            <i class="bx bx-plus ${plusIcon}"></i>
           </a>
         </li>
       </ul>`
