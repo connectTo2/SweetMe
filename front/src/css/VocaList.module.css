@@ -1,0 +1,32 @@
+.vocaList {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  /* 좌우 패딩 100px */
+  padding: 0 6.25rem;
+}
+
+.plusItem {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  max-width: 100%;
+  height: 85px;
+  background: #f7f7f7;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 0 1.5rem;
+}
+
+.plusIcon {
+  display: flex;
+  justify-content: center;
+  font-size: 2.5rem;
+}

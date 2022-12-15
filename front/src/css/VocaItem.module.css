@@ -1,43 +1,43 @@
 .vocaItem {
-  display: inline-block;
-  list-style-type: none;
   border: 3px solid black;
+  overflow-x: auto;
+  max-width: 100%;
   position: relative;
-  width: 23.75rem; /*380px*/
-  height: 8.5rem; /*136px*/
-  cursor: pointer;
 }
 
 .link {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
   text-decoration: none;
   color: inherit;
-  padding: 2rem 1.5rem 2rem;
+  padding: 0 1.5rem;
 }
 
 .title {
   font-size: 1.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 1.25rem;
 }
 
+.title,
+.description {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .remove {
-  cursor: pointer;
   display: none;
-  padding: 0.625rem;
   position: absolute;
-  font-size: 1.5rem;
   top: 0;
   right: 0;
-  margin: 1rem;
-  border: none;
-  background: none;
+  font-size: 2.5rem;
+  cursor: pointer;
 }
 
 /* li에 hover 되었을 때 button display block */
