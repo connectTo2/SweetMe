@@ -6,12 +6,24 @@
 }
 
 .link {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
   text-decoration: none;
   color: inherit;
-  padding: 1rem 0.75rem;
+  padding: 0 1.5rem;
 }
 
+.title {
+  font-size: 1.5rem;
+}
+
+.description {
+  font-size: 1.25rem;
+}
+
+.title,
 .description {
   overflow: hidden;
   white-space: nowrap;
@@ -19,12 +31,12 @@
 }
 
 .remove {
+  display: none;
   position: absolute;
-  cursor: pointer;
   top: 0;
   right: 0;
-  display: none;
   font-size: 2.5rem;
+  cursor: pointer;
 }
 
 /* li에 hover 되었을 때 button display block */

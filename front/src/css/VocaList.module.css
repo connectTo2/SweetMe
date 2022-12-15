@@ -5,3 +5,24 @@
   /* 좌우 패딩 100px */
   padding: 0 6.25rem;
 }
+
+.plusItem {
+  overflow-x: auto;
+  max-width: 100%;
+  height: 85px;
+  background: #f7f7f7;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 0 1.5rem;
+}
+
+.plusButton {
+  font-size: 2.5rem;
+}
