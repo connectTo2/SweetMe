@@ -1,0 +1,7 @@
+.vocaList {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  /* 좌우 패딩 100px */
+  padding: 0 6.25rem;
+}
