@@ -1,6 +1,6 @@
 import Component from '../core/Component';
 import VocaItem from './VocaItem';
-import { vocaList, link, plusItem, plusButton } from '../css/VocaList.module.css';
+import { vocaList, link, plusItem, plusIcon } from '../css/VocaList.module.css';
 
 class VocaList extends Component {
   render() {
@@ -12,9 +12,7 @@ class VocaList extends Component {
 
         <li class="${plusItem}">
           <a class="${link}" href="#">
-            <button class="${plusButton}">
-              <i class="bx bx-plus"></i>
-            </button>
+            <span class="${plusIcon}"><i class="bx bx-plus"></i></span>
           </a>
         </li>
       </ul>`
