@@ -7,9 +7,9 @@ const userDatabase = require('../user');
 const getUserData = (req, res) => {
   try {
     const token = req.cookies.accessToken;
-    const data = jwt.verify(token, process.env.ACCESS_SECRET);
+    const decode = jwt.verify(token, process.env.ACCESS_SECRET);
 
-    const userData = userDatabase.find(user => user.email === data.email && user.password === data.password);
+    const userData = userDatabase.find(user => user.email === decode.email && user.password === decode.password);
 
     return userData;
   } catch {
