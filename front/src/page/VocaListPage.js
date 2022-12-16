@@ -1,1 +1,3 @@
-// vocalist.js
+class VocaListPage {}
+
+export default VocaListPage;
