@@ -10,7 +10,11 @@ export default defineConfig({
     // dev 관련 설정
     port: 9000,
     proxy: {
-      '/api': 'http://localhost:8000',
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, ''),
+      },
     },
   },
   preview: { port: 9090 },
