@@ -1,21 +1,22 @@
-// 실제 jwt를 가져와 어떻게 사용하는지 작성
+/* --------------------------------- require -------------------------------- */
 const jwt = require('jsonwebtoken');
 const userDatabase = require('../user');
 
+/* --------------------------------- handler -------------------------------- */
 // 사용자가 로그인 페이지에서 이메일과 패스워드를 입력해 signIn에 post요청을 하면 서버에서는 사용자에게 받은 정보를 가지고 AccessToken을 발급.
-const signIn = (req, res, next) => {
+const signIn = (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
   const userInfo = userDatabase.find(user => user.email === email && user.password === password);
 
-  // 유저가 데이터베이스에 없으면 에러 처리
   if (!userInfo) {
+    // 유저가 데이터베이스에 없으면 에러 처리
     res.status(403).json('Not Authorized!');
-  }
-  // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급
-  else {
+  } else {
+    // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급
     const { id, name, email, password } = userInfo;
+
     try {
       // AccessToken 발급
       // 3가지 인수: (sign함수에 담을 유저정보, dotenv파일에서 지정해준 secret값, 해당 토큰의 유효기간과 발행자에 대한 정보 등을 담은 객체)
@@ -56,15 +57,9 @@ const signIn = (req, res, next) => {
       res.status(500).json('Signin Failed');
     }
   }
-
-  // 다음 미들웨어 실행을 위해 next 실행
-  next();
 };
 
 // TODO: signIn 성공으로 토큰 정상 발급시 signInSuccess로 요청을 받음
 // const signInSuccess = (req, res) => {};
 
-module.exports = {
-  signIn,
-  // signInSuccess,
-};
+module.exports = { signIn };
