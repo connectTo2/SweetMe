@@ -1,3 +1,4 @@
+import { title } from '../css/common.module.css';
 import {
   signform,
   signList,
@@ -17,7 +18,7 @@ class SignIn extends Component {
   // TODO: js 적용 렌더링
   render() {
     return `
-      <h2 class="title">로그인</h2>
+      <h2 class="${title}">로그인</h2>
       <form class="${signform} signin">
         <ul class="${signList}">
           <li class="${signItem}">
