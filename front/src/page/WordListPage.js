@@ -1,1 +1,3 @@
-// wordlist.js
+class WordListPage {}
+
+export default WordListPage;

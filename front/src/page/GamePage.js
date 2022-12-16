@@ -1,1 +1,3 @@
-// game.js
+class GamePage {}
+
+export default GamePage;
