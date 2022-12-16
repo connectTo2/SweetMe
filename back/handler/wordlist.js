@@ -2,7 +2,11 @@
 const { getUserData } = require('./common');
 
 /* --------------------------------- handler -------------------------------- */
-const getWords = () => {};
+const getWords = (req, res) => {
+  const { voca } = getUserData(req, res);
+
+  res.send(voca);
+};
 
 const addWord = () => {};
 
