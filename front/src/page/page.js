@@ -15,11 +15,11 @@ class Page extends Component {
      * state에 전달받은 데이터를 저장한 뒤 Promise 객체에 this를 담아 반환한다.
      */
     // eslint-disable-next-line no-constructor-return
-    return async () => {
+    return (async () => {
       const { data: userInfo } = await axios.get('/user');
       this.state = { userInfo };
       return this;
-    };
+    })();
   }
 
   render() {
