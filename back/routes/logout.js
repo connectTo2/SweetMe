@@ -1,5 +1,12 @@
-// /logout 으로 get요청이 오면 브라우저에 저장된 쿠키의 accessToken 값을 비워줌
-const logOut = (req, res) => {
+const express = require('express');
+
+const router = express.Router();
+
+router.use((req, res, next) => {
+  next();
+});
+
+router.get('/', (req, res) => {
   try {
     req.cookie('accessToken', '');
     req.cookie('refreshToken', '');
@@ -8,6 +15,6 @@ const logOut = (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-};
+});
 
-module.exports = { logOut };
+module.exports = router;
