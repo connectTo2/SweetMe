@@ -1,0 +1,31 @@
+/* text */
+.title {
+  margin-bottom: var(--size72);
+  font-size: var(--size56);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* view */
+.hide {
+  display: none !important;
+}
+
+/* button */
+.outlineButton {
+  border: 3px solid var(--black);
+}
+
+.fillButton {
+  color: var(--white);
+  background-color: var(--black);
+}
+
+.ghostButton:hover,
+.outlineButton:hover {
+  background-color: var(--lightGray);
+}
+
+.fillButton:hover {
+  background-color: var(--darkGray);
+}

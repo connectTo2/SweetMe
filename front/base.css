@@ -1,0 +1,51 @@
+:root {
+  /* color */
+  --black: #000;
+  --white: #fff;
+  --lightGray: #f7f7f7;
+  --darkGray: #666;
+
+  /* size */
+  --size80: 4rem;
+  --size72: 3.6rem;
+  --size56: 2.8rem;
+  --size40: 2rem;
+  --size32: 1.6rem;
+  --size20: 1rem;
+  --size12: 0.6rem;
+}
+
+/* reset */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+input {
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+  appearance: none;
+}
+
+button {
+  background-color: transparent;
+  border: 0;
+  appearance: none;
+}
+
+/* base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue',
+    'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+}
