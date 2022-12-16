@@ -1,11 +1,12 @@
 // 학습용 샘플입니다. 구조 파악되면 지우겠습니다.
 
 import './style.css';
+import axios from 'axios';
 import { card } from './style.module.css';
 import javascriptLogo from './javascript.svg';
 import { setupCounter } from './counter';
 
-console.log(card);
+const test = await axios.get('/api');
 
 document.querySelector('#app').innerHTML = `
   <div>
