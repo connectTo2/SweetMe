@@ -1,4 +1,3 @@
-/* --------------------------------- require -------------------------------- */
 const jwt = require('jsonwebtoken');
 const userDatabase = require('../user');
 
