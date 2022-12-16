@@ -1,1 +1,3 @@
-// signup.js
+class SignUpPage {}
+
+export default SignUpPage;

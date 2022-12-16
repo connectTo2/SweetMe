@@ -16,9 +16,13 @@ class Page extends Component {
      */
     // eslint-disable-next-line no-constructor-return
     return (async () => {
-      const { data: userInfo } = await axios.get('/user');
-      this.state = { userInfo };
-      return this;
+      try {
+        const { data: userInfo } = await axios.get('/user');
+        this.state = { userInfo };
+        return this;
+      } catch (e) {
+        console.error(e);
+      }
     })();
   }
 
