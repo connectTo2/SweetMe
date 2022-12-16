@@ -1,10 +1,16 @@
-/* --------------------------------- require -------------------------------- */
+const express = require('express');
 const jwt = require('jsonwebtoken');
 const userDatabase = require('../user');
 
-/* --------------------------------- handler -------------------------------- */
-// 사용자가 로그인 페이지에서 이메일과 패스워드를 입력해 signIn에 post요청을 하면 서버에서는 사용자에게 받은 정보를 가지고 AccessToken을 발급.
-const signIn = (req, res) => {
+const router = express.Router();
+
+router.use((req, res, next) => {
+  next();
+});
+
+/* ------------------------------------ signin page ----------------------------------- */
+// signin page에서 get요청
+router.get('/', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
@@ -57,9 +63,6 @@ const signIn = (req, res) => {
       res.status(500).json('Signin Failed');
     }
   }
-};
+});
 
-// TODO: signIn 성공으로 토큰 정상 발급시 signInSuccess로 요청을 받음
-// const signInSuccess = (req, res) => {};
-
-module.exports = { signIn };
+module.exports = router;
