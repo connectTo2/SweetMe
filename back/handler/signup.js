@@ -1,4 +1,6 @@
 /* --------------------------------- handler -------------------------------- */
+const verifyEmail = req => {};
+
 const addUser = req => {};
 
-module.exports = { addUser };
+module.exports = { verifyEmail, addUser };

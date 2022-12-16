@@ -5,8 +5,9 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const {
   signIn,
-  logOut,
+  verifyEmail,
   addUser,
+  logOut,
   getAllWords,
   getVoca,
   addVoca,
@@ -30,27 +31,29 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PATCH', 'DELETE'], credent
 dotenv.config();
 
 /* -------------------------------- route -------------------------------- */
-// 로그인 JWT 토큰 발행
-app.route('/signin').post(signIn);
+// signin page
+app.post('/signin', signIn);
 
-app.route('/signup').post(addUser);
+// signup page
+app.get('/signup', verifyEmail);
+app.post('/signup', addUser);
 
+// vocalist page, wordlist page, game page
 app.route('/logout').get(logOut);
 
-// prettier-ignore
-app.route('/vocalist')
-  .get(getVoca)
-  .post(addVoca)
-  .delete(removeVoca);
+// vocalist page
+app.get('/vocalist', getVoca);
+app.post('/vocalist', addVoca);
+app.delete('/vocalist/:id', removeVoca);
 
-// prettier-ignore
-app.route('/wordlist')
-  .get(getWords)
-  .post(addWord)
-  .patch(editWord)
-  .delete(removeWord);
+// wordlist page
+app.get('/wordlist', getWords);
+app.post('/wordlist', addWord);
+app.patch('/wordlist/:id', editWord);
+app.delete('/wordlist/:id', removeWord);
 
-app.route('/game').get(getAllWords);
+// game page
+app.get('/game', getAllWords);
 
 app.listen(process.env.PORT, () => {
   console.log(`server is on ${process.env.PORT}`);
