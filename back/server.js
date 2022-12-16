@@ -3,12 +3,19 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { signIn } = require('./handler/signin');
-const { logOut } = require('./handler/logout');
-const { addUser } = require('./handler/signup');
-const { getAllWords } = require('./handler/game');
-const { getVoca, addVoca, removeVoca } = require('./handler/vocalist');
-const { getWords, addWord, editWord, removeWord } = require('./handler/wordlist');
+const {
+  signIn,
+  logOut,
+  addUser,
+  getAllWords,
+  getVoca,
+  addVoca,
+  removeVoca,
+  getWords,
+  addWord,
+  editWord,
+  removeWord,
+} = require('./handler');
 
 /* ------------------------------------ use middleware ----------------------------------- */
 const app = express();
@@ -26,20 +33,24 @@ dotenv.config();
 // 로그인 JWT 토큰 발행
 app.route('/signin').post(signIn);
 
-// 로그아웃 JWT 토큰 삭제
 app.route('/logout').get(logOut);
 
-// 회원가입 서버에 유저 정보 추가
 app.route('/signup').post(addUser);
 
-// vocalist route
-app.route('/vocalist').get(getVoca).post(addVoca).delete(removeVoca);
-
-// wordlist route
-app.route('/wordlist').get(getWords).post(addWord).patch(editWord).delete(removeWord);
-
-// game route
 app.route('/game').get(getAllWords);
+
+// prettier-ignore
+app.route('/vocalist')
+  .get(getVoca)
+  .post(addVoca)
+  .delete(removeVoca);
+
+// prettier-ignore
+app.route('/wordlist')
+  .get(getWords)
+  .post(addWord)
+  .patch(editWord)
+  .delete(removeWord);
 
 app.listen(process.env.PORT, () => {
   console.log(`server is on ${process.env.PORT}`);
