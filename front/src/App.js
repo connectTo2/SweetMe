@@ -15,11 +15,11 @@ class App extends Component {
      */
     this.routes = [
       { path: /^\/$/, page: VocaListPage },
-      { path: /^\signin/, page: SignInPage },
-      { path: /^\/signup/, page: SignUpPage },
-      { path: /^\/wordlist/, page: WordListPage },
+      { path: /^\/signin$/, page: SignInPage },
+      { path: /^\/signup$/, page: SignUpPage },
+      { path: /^\/wordlist$/, page: WordListPage },
       { path: /^\/wordlist\/[0-9]+/, page: WordListPage },
-      { path: /^\/game/, page: GamePage },
+      { path: /^\/game$/, page: GamePage },
     ];
     this.path = '/signin';
   }
@@ -36,7 +36,7 @@ class App extends Component {
      * 서버에 저장되어 있는 단어장(Wordlist)의 경우, vocaId를 사용하기 때문에 /WordList url에 path에 vocaId가 path에 추가되어 들어오는게 된다.
      * vocaId만 숫자형태의 문자열로 이뤄져있기 때문에 정규표현식으로 숫자를 검색해서 vocaId를 분리하여 페이지를 호출할 때 props에 추가하여 전달한다.
      */
-    const vocaId = /^[0-9]+$/.match(this.path);
+    const vocaId = this.path.match(/^[0-9]+$/);
     const url =
       this.path === '/signin' || this.path === '/signup'
         ? { path: this.path }
@@ -53,7 +53,7 @@ class App extends Component {
      */
     // eslint-disable-next-line new-cap
     return new page(url).then(pageInstance => {
-      document.getElementById('root').innerHTML = pageInstance.render();
+      document.getElementById('app').innerHTML = pageInstance.render();
     });
   }
 }
