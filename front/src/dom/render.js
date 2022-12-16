@@ -1,4 +1,4 @@
-import eventHodler from './eventHolder';
+import eventHolder from './eventHolder';
 import diff from './diff';
 
 // render 함수 외부에 리렌더링시 RootComponent의 재호출이 일어나지 않고, 초기 렌더링시 전달받은 RootComponent의 instance(이하 instance)와 $container를 기억하기 위한 변수 생성
@@ -11,13 +11,13 @@ const bindEventHandler = () => {
    * 모든 이벤트는 위임하고, handler 안에서 조건을 확인할 수 있도록 한다.
    * 이벤트 호출자는 $root로 하되, selector가 window일 경우 window에 이벤트를 등록한다.
    */
-  eventHodler.forEach(({ type, selector, handler }) => {
+  eventHolder.forEach(({ type, selector, handler }) => {
     (selector === 'window' ? window : $root).addEventListener(type, handler);
   });
 };
 
 /** @type { (RootComponent: class, $container: HTMLElement) => void } */
-const render = (RootComponent, $container) => {
+const render = async (RootComponent, $container) => {
   if (!rootInstance) rootInstance = new RootComponent();
   if (!$root) $root = $container;
 
@@ -25,7 +25,7 @@ const render = (RootComponent, $container) => {
   const $virtual = $root.cloneNode();
 
   // rootInstance의 render 메서드는 domString을 반환함
-  $virtual.innerHTML = rootInstance.render();
+  $virtual.innerHTML = await rootInstance.render();
 
   // diff 알고리즘을 구현한 diff 함수를 호출하여 실제 dom을 변경시킴
   diff($root, $virtual);
