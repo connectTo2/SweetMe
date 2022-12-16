@@ -10,13 +10,13 @@ const signIn = (req, res) => {
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
   const userInfo = userDatabase.find(user => user.email === email && user.password === password);
 
-  // 유저가 데이터베이스에 없으면 에러 처리
   if (!userInfo) {
+    // 유저가 데이터베이스에 없으면 에러 처리
     res.status(403).json('Not Authorized!');
-  }
-  // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급
-  else {
+  } else {
+    // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급
     const { id, name, email, password } = userInfo;
+
     try {
       // AccessToken 발급
       // 3가지 인수: (sign함수에 담을 유저정보, dotenv파일에서 지정해준 secret값, 해당 토큰의 유효기간과 발행자에 대한 정보 등을 담은 객체)

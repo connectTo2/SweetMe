@@ -33,11 +33,9 @@ dotenv.config();
 // 로그인 JWT 토큰 발행
 app.route('/signin').post(signIn);
 
-app.route('/logout').get(logOut);
-
 app.route('/signup').post(addUser);
 
-app.route('/game').get(getAllWords);
+app.route('/logout').get(logOut);
 
 // prettier-ignore
 app.route('/vocalist')
@@ -51,6 +49,8 @@ app.route('/wordlist')
   .post(addWord)
   .patch(editWord)
   .delete(removeWord);
+
+app.route('/game').get(getAllWords);
 
 app.listen(process.env.PORT, () => {
   console.log(`server is on ${process.env.PORT}`);

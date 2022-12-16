@@ -2,6 +2,8 @@
 const logOut = (req, res) => {
   try {
     req.cookie('accessToken', '');
+    req.cookie('refreshToken', '');
+
     res.status(200).json('Logout Success!');
   } catch (error) {
     res.status(500).json(error);
