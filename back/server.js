@@ -24,10 +24,10 @@ const game = require('./routes/game');
 
 /* ------------------------------- load Router module ------------------------------- */
 // /routes -> 각 path의 라우터를 모듈로 생성.
+app.use('/', vocalist);
 app.use('/signin', signin);
 app.use('/signup', signup);
 app.use('/logout', logout);
-app.use('/vocalist', vocalist);
 app.use('/wordlist', wordlist);
 app.use('/game', game);
 
