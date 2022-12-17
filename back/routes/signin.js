@@ -10,7 +10,7 @@ router.use((req, res, next) => {
 
 /* ------------------------------------ signin page ----------------------------------- */
 // signin page에서 get요청
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
