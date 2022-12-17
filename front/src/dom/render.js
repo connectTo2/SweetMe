@@ -18,19 +18,23 @@ const bindEventHandler = () => {
 
 /** @type { (RootComponent: class, $container: HTMLElement) => void } */
 const render = async (RootComponent, $container) => {
-  if (!rootInstance) rootInstance = new RootComponent();
-  if (!$root) $root = $container;
+  try {
+    if (!rootInstance) rootInstance = new RootComponent();
+    if (!$root) $root = $container;
 
-  // 가상의 element 또한 $root가 가지고 있는 프로퍼티를 그대로 가져야 하기 때문에 $root 노드를 clone
-  const $virtual = $root.cloneNode();
+    // 가상의 element 또한 $root가 가지고 있는 프로퍼티를 그대로 가져야 하기 때문에 $root 노드를 clone
+    const $virtual = $root.cloneNode();
 
-  // rootInstance의 render 메서드는 domString을 반환함
-  $virtual.innerHTML = await rootInstance.render();
+    // rootInstance의 render 메서드는 domString을 반환함
+    $virtual.innerHTML = await rootInstance.render();
 
-  // diff 알고리즘을 구현한 diff 함수를 호출하여 실제 dom을 변경시킴
-  diff($root, $virtual);
+    // diff 알고리즘을 구현한 diff 함수를 호출하여 실제 dom을 변경시킴
+    diff($root, $virtual);
 
-  bindEventHandler();
+    bindEventHandler();
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export default render;

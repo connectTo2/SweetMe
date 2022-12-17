@@ -33,6 +33,7 @@ class Component {
          * 이벤트 target이 selector 자신이거나 하위 요소인 경우 함수를 호출한다.
          */
         event.handler = e => {
+          e.preventDefault();
           if (e.target.closest(selector)) handler(e);
         };
 
@@ -46,6 +47,7 @@ class Component {
    * 자식 컴포넌트가 render 메서드를 가지고 있지 않다는 에러를 띄우기 위한 목적으로 사용된다.
    * 컴포넌트들을 props 방식으로 만들고 있기 때문에, 자식 컴포넌트들은 모두 render 메서드를 가져야 한다.
    */
+  // eslint-disable-next-line class-methods-use-this
   render() {
     throw new Error('컴포넌트가 render 메서드를 가지고 있지 않습니다. 생성해주세요.');
   }
