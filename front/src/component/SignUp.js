@@ -1,4 +1,4 @@
-import { title } from '../css/common.module.css';
+import { title, hide, fillButton, outlineButton } from '../css/common.module.css';
 import {
   signform,
   signList,
@@ -6,16 +6,14 @@ import {
   label,
   input,
   error,
-  hide,
   submitButton,
-  fillButton,
   changeSignPage,
-  outlineButton,
 } from '../css/Sign.module.css';
 import Component from '../core/Component';
+import { signupSchema } from '../validation/schema';
 
 class SignUp extends Component {
-  // TODO: js 적용 렌더링
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return `
       <h2 class="${title}">회원가입</h2>
@@ -31,18 +29,18 @@ class SignUp extends Component {
               autofocus 
               required 
             />
-            <p class="${error} ${hide}">올바른 이메일 형식이 아닙니다.</p>
+            <p class="${error} ${hide}">${signupSchema.email.error}</p>
           </li>
           <li class="${signItem}">
-            <label for="username" class="${label}">User name</label>
+            <label for="userName" class="${label}">User name</label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="userName"
+              name="userName"
               class="${input}"
               required
             />
-            <p class="${error} ${hide}">1자리 이상의 문자를 입력해주세요.</p>
+            <p class="${error} ${hide}">${signupSchema.userName.error}</p>
           </li>
           <li class="${signItem}">
             <label for="password" class="${label}">Password</label>
@@ -53,7 +51,7 @@ class SignUp extends Component {
               class="${input}" 
               required 
             />
-            <p class="${error} ${hide}">6자리 이상의 문자를 입력해주세요.</p>
+            <p class="${error} ${hide}">${signupSchema.password.error}</p>
           </li>
           <li class="${signItem}">
             <label for="confirmPassword" class="${label}">Confirm pssword</label>
@@ -64,16 +62,23 @@ class SignUp extends Component {
               class="${input}"
               required
             />
-            <p class="${error} ${hide}">비밀번호가 일치하지 않습니다.</p>
+            <p class="${error} ${hide}">${signupSchema.confirmPassword.error}</p>
           </li>
         </ul>
-        <button type="submit" class="${submitButton} ${fillButton}">ENTER</button>
+        <button type="submit" class="${submitButton} ${fillButton}" disabled>ENTER</button>
       </form> 
       <a href="/signin" class="${changeSignPage} signup ${outlineButton}">로그인</a>
     `;
   }
 
-  // TODO: addEventHandler() {}
+  addEventListener() {
+    const { valid, postSignUp, changePath } = this.props;
+    return [
+      { type: 'input', selector: `.${input}`, handler: valid },
+      { type: 'click', selector: `.${changeSignPage}`, handler: changePath },
+      { type: 'click', selector: `.${submitButton}`, handler: postSignUp },
+    ];
+  }
 }
 
-export default SignUp;
+export { SignUp, hide, submitButton };
