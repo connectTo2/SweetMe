@@ -46,8 +46,8 @@ let infoToSend = {
 };
 
 router.get('/', (req, res) => {
-  const { name, voca, wordsCount } = getUserInfo(req, res);
-  const infoToSend = { name, voca, wordsCount };
+  // const { name, voca, wordsCount } = getUserInfo(req, res);
+  // const infoToSend = { name, voca, wordsCount };
 
   res.send(infoToSend);
 });
