@@ -46,13 +46,8 @@ let infoToSend = {
 };
 
 router.get('/', (req, res) => {
-<<<<<<< HEAD
   const { name, voca, wordsCount } = getUserInfo(req, res);
   const infoToSend = { name, voca, wordsCount };
-=======
-  // const { name, voca, wordsCount } = getUserData(req, res);
-  // const infoToSend = { name, voca, wordsCount };
->>>>>>> feature/vocaList-removeKeyword
 
   res.send(infoToSend);
 });
