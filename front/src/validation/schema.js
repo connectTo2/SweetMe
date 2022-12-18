@@ -4,9 +4,10 @@ const signinSchema = {
     error: '올바른 이메일 형식이 아닙니다.',
     dirty: false,
     get valid() {
+      // FIXME: TLD(Top Level Domain) 길이를 최대 3으로 고정해놨는데, 길이 체크를 안해줌.
       // prettier-ignore
       // eslint-disable-next-line max-len
-      return /^[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*@[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*.[a-z|A-Z]{2,3}/.test(this.value);
+      return /^[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*@[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*.[a-z|A-Z]{2,3}$/.test(this.value);
     },
   },
   password: {

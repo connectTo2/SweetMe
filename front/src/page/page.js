@@ -11,14 +11,14 @@ class Page extends Component {
     super();
 
     /**
-     * 페이지가 호출되면 서버에서 userInfo 데이터를 요청한다.
+     * 페이지가 호출되면 서버에서 usersInfo 데이터를 요청한다.
      * state에 전달받은 데이터를 저장한 뒤 Promise 객체에 this를 담아 반환한다.
      */
     // eslint-disable-next-line no-constructor-return
     return (async () => {
       try {
-        const { data: userInfo } = await axios.get('/user');
-        this.state = { userInfo };
+        const { data: usersInfo } = await axios.get('/user');
+        this.state = { usersInfo };
         return this;
       } catch (e) {
         console.error(e);
