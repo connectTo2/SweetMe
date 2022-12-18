@@ -10,9 +10,9 @@ import {
   changeSignPage,
 } from '../css/Sign.module.css';
 import Component from '../core/Component';
+import { signinSchema } from '../validation/schema';
 
 class SignIn extends Component {
-  // TODO: js 적용 렌더링
   // eslint-disable-next-line class-methods-use-this
   render() {
     return `
@@ -29,7 +29,7 @@ class SignIn extends Component {
               autofocus 
               required 
             />
-            <p class="${error} ${hide}">올바른 이메일 형식이 아닙니다.</p>
+            <p class="${error} ${hide}">${signinSchema.email.error}</p>
           </li>
           <li class="${signItem}">
             <label for="password" class="${label}">Password</label>
@@ -40,7 +40,7 @@ class SignIn extends Component {
               class="${input}" 
               required 
             />
-            <p class="${error} ${hide}">6자리 이상의 문자를 입력해주세요.</p>
+            <p class="${error} ${hide}">${signinSchema.password.error}</p>
           </li>
         </ul>
         <button type="submit" class="${submitButton} ${fillButton}" disabled>ENTER</button>
@@ -50,11 +50,11 @@ class SignIn extends Component {
   }
 
   addEventListener() {
-    const { valid, checkUser, routeSignUpPage } = this.props;
+    const { valid, postSignIn, changePath } = this.props;
     return [
       { type: 'input', selector: `.${input}`, handler: valid },
-      { type: 'click', selector: `.${changeSignPage}`, handler: routeSignUpPage },
-      { type: 'click', selector: `.${submitButton}`, handler: checkUser },
+      { type: 'click', selector: `.${changeSignPage}`, handler: changePath },
+      { type: 'click', selector: `.${submitButton}`, handler: postSignIn },
     ];
   }
 }
