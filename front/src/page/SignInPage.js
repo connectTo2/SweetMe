@@ -16,7 +16,8 @@ class SignInPage extends Component {
     return `${new SignIn({
       valid: _.debounce(this.valid.bind(this)),
       checkUser: this.checkUser.bind(this),
-      routeSignUpPage: this.changePath.bind(this),
+      // routeSignUpPage: () => this.changePath.bind(this),
+      routeSignUpPage: this.routeSignUpPage.bind(this),
     }).render()}`;
   }
 
@@ -50,9 +51,8 @@ class SignInPage extends Component {
 
   /** changeSignPage 클릭 이벤트시 회원가입으로 라우팅 */
   // TODO: 라우트 구현시, a태그 클릭하면 href값을 인수로 전달하도록 만들기. -> changePath 함수에서 처음부터 공통으로 만드는게 좋을듯
-  // TODO: changePath에서 pushState 메서드 호출
-  routeSignUpPage(e) {
-    e.preventDefault();
+  // TODO: routeSignUpPage 메서드가 하는 일은 App의 chagnePath를 호출하며 인수를 전달하는 것 밖에 없다. 그렇다면 routeSignUpPage 메서드 없이 changePath를 사용하는게 좋지 않을까?
+  routeSignUpPage() {
     this.changePath('/signup');
   }
 }
