@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 });
 
 /* ------------------------------------ signin page ----------------------------------- */
-// signin page에서 get요청
+// signin page에서 post요청
 router.post('/', (req, res) => {
   const { email, password } = req.body;
 
