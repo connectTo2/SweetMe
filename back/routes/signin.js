@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 });
 
 /* ------------------------------------ signin page ----------------------------------- */
-// signin page에서 get요청
+// signin page에서 post요청
 router.post('/', (req, res) => {
   const { email, password } = req.body;
 
@@ -23,6 +23,7 @@ router.post('/', (req, res) => {
     // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급
     const { id, name, email, password } = userInfo;
 
+    console.log(process.env.ACCESS_SECRET);
     try {
       // AccessToken 발급
       // 3가지 인수: (sign함수에 담을 유저정보, dotenv파일에서 지정해준 secret값, 해당 토큰의 유효기간과 발행자에 대한 정보 등을 담은 객체)
