@@ -15,20 +15,15 @@ class VocaItem extends Component {
         <button class="${remove}" >
           <i class='bx bx-x'></i> 
         </button>
-      </li>`;
+      </li>
+      `;
   }
 
   addEventListener() {
     const { routeDetailPage } = this.props;
 
-    return [
-      {
-        type: 'click',
-        selector: `.${vocaItem}`,
-        handler: routeDetailPage,
-      },
-    ];
+    return [{ type: 'click', selector: `.${vocaItem}`, handler: routeDetailPage }];
   }
 }
 
-export default VocaItem;
+export { VocaItem, vocaTitle, remove };
