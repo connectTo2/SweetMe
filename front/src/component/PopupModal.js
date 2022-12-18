@@ -4,16 +4,14 @@ import Component from '../core/Component';
 import { hide } from '../css/common.module.css';
 import { popup, modalTitle, button, outlineButtonDark } from '../css/PopupModal.module.css';
 
-// TODO: PopupModal.module.css 수정 필요
-
 class PopupModal extends Component {
   render() {
-    console.log(this.props);
+    console.log('[POPUP]', this.props);
     const { removeKeyword } = this.props;
+
     // prettier-ignore
     return `
-      <div class="${popup}">
-      <!-- "개발 용어"를 prop으로 받아서 보여줘야 합니다. -->
+      <div class="${popup} ${removeKeyword ?  '' : `${hide}` }">
       <p class="${modalTitle}">"<strong class ="modalKeyword">${removeKeyword}</strong>"를 정말 삭제하시겠습니까?</p>
       <div class="${button}">
       <button class="${outlineButtonDark} no" >아니오</button>
