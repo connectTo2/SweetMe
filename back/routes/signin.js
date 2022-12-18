@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const userDatabase = require('../user');
+const usersInfo = require('../user');
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.post('/', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
-  const userInfo = userDatabase.find(user => user.email === email && user.password === password);
+  const userInfo = usersInfo.find(user => user.email === email && user.password === password);
 
   if (!userInfo) {
     // 유저가 데이터베이스에 없으면 에러 처리

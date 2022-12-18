@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserData } = require('../auth');
+const { getUserInfo } = require('../auth');
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  const { name, voca, wordsCount } = getUserData(req, res);
+  const { name, voca, wordsCount } = getUserInfo(req, res);
   const infoToSend = { name, voca, wordsCount };
 
   res.send(infoToSend);

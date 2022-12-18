@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserData } = require('../auth');
+const { getUserInfo } = require('../auth');
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  const { voca } = getUserData(req, res);
+  const { voca } = getUserInfo(req, res);
   let allVocaWords = [];
 
   voca.forEach(({ words }) => {
