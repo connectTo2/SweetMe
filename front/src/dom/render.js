@@ -1,5 +1,6 @@
 import eventHolder from './eventHolder';
-import diff from './diff';
+import tempDiff from './tempDiff';
+// import diff from './diff';
 
 // render 함수 외부에 리렌더링시 RootComponent의 재호출이 일어나지 않고, 초기 렌더링시 전달받은 RootComponent의 instance(이하 instance)와 $container를 기억하기 위한 변수 생성
 let rootInstance = null;
@@ -29,7 +30,8 @@ const render = async (RootComponent, $container) => {
     $virtual.innerHTML = await rootInstance.render();
 
     // diff 알고리즘을 구현한 diff 함수를 호출하여 실제 dom을 변경시킴
-    diff($root, $virtual);
+    // diff($root, $virtual);
+    tempDiff($root, $virtual);
 
     bindEventHandler();
   } catch (e) {
