@@ -15,7 +15,7 @@
   padding: 0 1.5rem;
 }
 
-.title {
+.vocaTitle {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
@@ -24,7 +24,7 @@
   font-size: 1.25rem;
 }
 
-.title,
+.vocaTitle,
 .description {
   overflow: hidden;
   white-space: nowrap;

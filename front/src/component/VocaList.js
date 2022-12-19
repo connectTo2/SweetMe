@@ -1,20 +1,33 @@
 import Component from '../core/Component';
-import VocaItem from './VocaItem';
 import { vocaList, link, plusItem, plusIcon } from '../css/VocaList.module.css';
+
+/* -------------------------------- component ------------------------------- */
+import { VocaItem, remove } from './VocaItem';
 
 class VocaList extends Component {
   render() {
+    const { voca } = this.props;
+
     // prettier-ignore
-    // TODO: 받은 데이터를 통해 VocaItem 컴포넌트에게 전달해주어야한다. (voca.title, voca.vocaDescription)
     return `
       <ul class="${vocaList}">
-        <!-- vocaItem component rendering -->
-
+        ${voca.map(vocaInfo => new VocaItem({...this.props, vocaInfo}).render()).join('')}
         <li class="${plusItem}">
-          <a class="${link}" href="#">
+          <a href="/" class="${link}">
             <i class="bx bx-plus ${plusIcon}"></i>
           </a>
         </li>
       </ul>`
   }
+
+  addEventListener() {
+    const { routeWordlistPage, confirmModal } = this.props;
+
+    return [
+      { type: 'click', selector: `.${plusItem}`, handler: routeWordlistPage },
+      { type: 'click', selector: `.${remove}`, handler: confirmModal },
+    ];
+  }
 }
+
+export { VocaList, vocaList, plusItem, remove };
