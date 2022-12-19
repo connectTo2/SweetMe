@@ -1,0 +1,10 @@
+.userName {
+  text-align: center;
+  font-size: var(--size56);
+}
+
+.RegisteredWord {
+  display: block;
+  text-align: center;
+  margin-bottom: var(--size72);
+}
