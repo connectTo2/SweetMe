@@ -16,7 +16,7 @@ class SignInPage extends Component {
     return `${new SignIn({
       valid: _.debounce(this.valid.bind(this), 200),
       postSignIn: this.postSignIn.bind(this),
-      changePath: () => this.changePath('/signup'),
+      changePath: this.changePath,
     }).render()}`;
   }
 
