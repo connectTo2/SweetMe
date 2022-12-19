@@ -19,14 +19,10 @@ class VocaListPage extends Component {
     return (async () => {
       try {
         // voca 데이터를 받아온 후 state에 저장한다.
-        // TODO: await 두 번 사용하는게 맞을지 리팩토링
-        // const { name, voca, wordsCount } = await (await axios.get('/api')).data; // 서버데이터 -> state
-
         const { data: userInfo } = await axios.get('/api');
-        console.log(userInfo);
-        const { name, voca, wordsCount } = userInfo;
+        const { name, voca } = userInfo;
+        this.state = { name, voca, removeKeyword, removeVocaId };
 
-        this.state = { name, voca, wordsCount, removeKeyword, removeVocaId };
         return this;
       } catch (e) {
         console.error(e);
@@ -84,14 +80,14 @@ class VocaListPage extends Component {
 
   // 모달 컴포넌트의 '예'를 클릭하면 removeVocaId를 가지고 DELETE 메서드를 요청한다.
   // TODO: removeKeyword, removeVocaId 로직 리팩토링 필요
-  async removeVocaItem(e) {
+  async removeVocaItem() {
     const { data: userInfo } = await axios.delete(`/api/${removeVocaId}`);
-    const { name, voca, wordsCount } = userInfo;
+    const { name, voca } = userInfo;
 
     removeKeyword = '';
     removeVocaId = '';
 
-    this.setState({ name, voca, wordsCount, removeKeyword, removeVocaId });
+    this.setState({ name, voca, removeKeyword, removeVocaId });
   }
 }
 
