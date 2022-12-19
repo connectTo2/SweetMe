@@ -44,24 +44,12 @@ class Component {
          */
         event.handler = e => {
           e.preventDefault();
-          // FIXME: 라우팅시 이벤트 버그
-          if (e.target.closest(selector)) {
-            console.log('[notif class]', e.target.attributes.class.value, e.target.classList, e.target.className);
-            if (e.target.tagName === 'A') {
-              // e.target.className = e.target.attributes;
-              console.log('[class]', e.target.attributes.class.value, e.target.classList, e.target.className);
-              // console.log('[이벤트 타겟]', e.target, '[selector]', selector);
-              // console.log('[실행 이벤트]', type, selector, handler);
-            }
-            handler(e);
-          }
+          if (e.target.closest(selector)) handler(e);
         };
 
         eventHolder.push(event);
       }
     }
-    console.log('[eventHolder]', eventHolder);
-    console.log('-------------------------------------------------------------');
   }
 
   /**
