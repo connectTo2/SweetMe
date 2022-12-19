@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import axios from 'axios';
 import Component from '../core/Component';
+import User from '../component/User';
 import { VocaList } from '../component/VocaList';
 import { PopupModal } from '../component/PopupModal';
 import { vocaTitle } from '../component/VocaItem';
@@ -21,6 +22,7 @@ class VocaListPage extends Component {
         // const { name, voca, wordsCount } = await (await axios.get('/api')).data; // 서버데이터 -> state
 
         const { data: userInfo } = await axios.get('/api');
+        console.log(userInfo);
         const { name, voca, wordsCount } = userInfo;
 
         this.state = { name, voca, wordsCount, removeKeyword, removeVocaId };
@@ -32,6 +34,9 @@ class VocaListPage extends Component {
   }
 
   render() {
+    // user Component
+    const user = new User({ ...this.state }).render();
+
     // VocaList Component
     const vocaList = new VocaList({
       ...this.state,
@@ -48,6 +53,7 @@ class VocaListPage extends Component {
     }).render();
 
     return `
+      ${user}
       ${vocaList}
       ${popupModal}
      `;
