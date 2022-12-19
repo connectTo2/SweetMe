@@ -40,7 +40,6 @@ const usersInfo = [
         ],
       },
     ],
-    wordsCount: 17,
   },
   {
     userId: 1,
@@ -48,7 +47,6 @@ const usersInfo = [
     name: '마이크재리슨',
     password: '222222',
     voca: [],
-    wordsCount: 0,
   },
   {
     userId: 2,
@@ -56,7 +54,6 @@ const usersInfo = [
     name: '긔여니',
     password: '333333',
     voca: [],
-    wordsCount: 0,
   },
 ];
 
