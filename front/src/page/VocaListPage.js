@@ -81,8 +81,6 @@ class VocaListPage extends Component {
   // 모달 컴포넌트의 '예'를 클릭하면 removeVocaId를 가지고 DELETE 메서드를 요청한다.
   // TODO: removeKeyword, removeVocaId 로직 리팩토링 필요
   async removeVocaItem() {
-    // const { data: userInfo } = await axios.delete(`/api/${removeVocaId}`);
-    // const data = await (await axios.delete(`/api/${removeVocaId}`)).data;
     const { data: userInfo } = await axios.delete(`/api/${removeVocaId}`);
     const { name, voca } = userInfo;
 
