@@ -13,11 +13,13 @@ class SignUpPage extends Component {
   }
 
   render() {
-    return `${new SignUp({
+    const signup = new SignUp({
       valid: _.debounce(this.valid.bind(this), 200),
       postSignUp: this.postSignUp.bind(this),
       changePath: this.changePath,
-    }).render()}`;
+    }).render();
+
+    return `${signup}`;
   }
 
   // eslint-disable-next-line class-methods-use-this

@@ -47,7 +47,6 @@ class App extends Component {
     console.log('[path]', this.path);
     const { page } = this.routes.find(({ path }) => path.test(this.path));
     console.log('[page]', page);
-
     /**
      * 서버에 저장되어 있는 단어장(Wordlist)의 경우, vocaId를 사용하기 때문에 /WordList url에 path에 vocaId가 path에 추가되어 들어오게 된다.
      * vocaId만 숫자형태의 문자열로 이뤄져있기 때문에 정규표현식으로 숫자를 검색해서 vocaId를 분리하여 페이지를 호출할 때 props에 추가하여 전달한다.
