@@ -17,7 +17,12 @@ class VocaListPage extends Component {
     return (async () => {
       try {
         // voca 데이터를 받아온 후 state에 저장한다.
-        const { name, voca, wordsCount } = await (await axios.get('/api')).data; // 서버데이터 -> state
+        // TODO: await 두 번 사용하는게 맞을지 리팩토링
+        // const { name, voca, wordsCount } = await (await axios.get('/api')).data; // 서버데이터 -> state
+
+        const { data: userInfo } = await axios.get('/api');
+        const { name, voca, wordsCount } = userInfo;
+
         this.state = { name, voca, wordsCount, removeKeyword, removeVocaId };
         return this;
       } catch (e) {
@@ -43,24 +48,19 @@ class VocaListPage extends Component {
     }).render();
 
     return `
-    ${vocaList}
-    ${popupModal}
-    `;
+      ${vocaList}
+      ${popupModal}
+     `;
   }
 
   // +버튼을 누르면 wordlist 페이지로 이동해야한다.
-  routeWordlistPage(e) {
-    e.preventDefault();
-    // console.log(e.target);
-  }
+  routeWordlistPage(e) {}
 
   // 단어장을 누르면 해당 단어장의 wordlist 페이지로 이동해야한다.
-  routeDetailPage(e) {
-    e.preventDefault();
-    // console.log(e.target);
-  }
+  routeDetailPage(e) {}
 
   // x 버튼을 누르면 삭제할 것인지에 한 번 더 확인하는 모달 컴포넌트가 생성되어야 한다.
+  // TODO: Refactoring Naming
   confirmModal(e) {
     removeKeyword = e.target.closest('li').querySelector(`.${vocaTitle}`).textContent;
     removeVocaId = e.target.closest('li').dataset.id;
@@ -71,14 +71,19 @@ class VocaListPage extends Component {
   // 모달 컴포넌트의 '아니오'를 클릭하면 모달 컴포넌트가 사라져야한다.
   closeModal() {
     removeKeyword = '';
+
     this.setState({ ...this.state });
   }
 
   // 모달 컴포넌트의 '예'를 클릭하면 removeVocaId를 가지고 DELETE 메서드를 요청한다.
+  // TODO: removeKeyword, removeVocaId 로직 리팩토링 필요
   async removeVocaItem(e) {
-    const { name, voca, wordsCount } = await (await axios.delete(`/api/${removeVocaId}`)).data;
+    const { data: userInfo } = await axios.delete(`/api/${removeVocaId}`);
+    const { name, voca, wordsCount } = userInfo;
+
     removeKeyword = '';
     removeVocaId = '';
+
     this.setState({ name, voca, wordsCount, removeKeyword, removeVocaId });
   }
 }

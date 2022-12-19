@@ -6,16 +6,15 @@ import { popup, modalTitle, button, outlineButtonDark } from '../css/PopupModal.
 
 class PopupModal extends Component {
   render() {
-    console.log('[POPUP]', this.props);
     const { removeKeyword } = this.props;
 
     // prettier-ignore
     return `
-      <div class="${popup} ${removeKeyword ?  '' : `${hide}` }">
-      <p class="${modalTitle}">"<strong class ="modalKeyword">${removeKeyword}</strong>"를 정말 삭제하시겠습니까?</p>
+      <div class="${popup} ${removeKeyword ?  '' : `${hide}`}">
+        <p class="${modalTitle}">"<strong class ="modalKeyword">${removeKeyword}</strong>"를 정말 삭제하시겠습니까?</p>
       <div class="${button}">
-      <button class="${outlineButtonDark} no" >아니오</button>
-      <button class="${outlineButtonDark} yes" >예</button>
+        <button class="${outlineButtonDark} no">아니오</button>
+        <button class="${outlineButtonDark} yes">예</button>
       </div>`
   }
 
