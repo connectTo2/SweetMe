@@ -13,11 +13,13 @@ class SignInPage extends Component {
   }
 
   render() {
-    return `${new SignIn({
+    const singin = new SignIn({
       valid: _.debounce(this.valid.bind(this), 200),
       postSignIn: this.postSignIn.bind(this),
       changePath: this.changePath,
-    }).render()}`;
+    }).render();
+
+    return `${singin}`;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -51,7 +53,7 @@ class SignInPage extends Component {
     try {
       await axios.post(`/api${this.props.path}`, { email, password });
       console.log('[Toaster] 로그인 성공');
-      // TODO: this.changePath('/');
+      this.changePath('/');
     } catch (error) {
       console.log('[Toaster] 가입된 정보가 없습니다');
     }
