@@ -7,6 +7,7 @@ import { PopupModal } from '../component/PopupModal';
 import { vocaTitle } from '../component/VocaItem';
 
 // removeKeyword를 상태로 관리한다.
+// TODO: 네이밍리팩토링필요
 let removeKeyword = '';
 let removeVocaId = '';
 class VocaListPage extends Component {
