@@ -1,29 +1,3 @@
-// attribute를 비교하는 함수
-const updateAttribute = ($oldNode, $newNode) => {
-  const oldAttr = [...$oldNode.attributes];
-  const newAttr = [...$newNode.attributes];
-
-  // 달라지거나 추가된 props를 반영한다.
-  for (const { name, value } of newAttr) {
-    if (value !== oldAttr.getAttribute(name)) $oldNode.setAttribute(name, value);
-  }
-
-  // 없어진 props를 attribute에서 제거
-  for (const { name } of oldAttr) {
-    if ($newNode.getAttribute(name) === undefined) $oldNode.removeAttribute(name);
-  }
-
-  /**
-   * element attribute를 일치시켜도 element property는 일치하지 않는 경우가 있다.
-   * 모든 프로퍼티를 비교해야 하지만 checked/value/selected 프로퍼티만 비교한다.
-   */
-  ['checked', 'value', 'selected'].forEach(key => {
-    if ($oldNode[key] !== undefined && $newNode[key] !== undefined && $oldNode[key] !== $newNode[key]) {
-      $oldNode[key] = $newNode[key];
-    }
-  });
-};
-
 // 모든 태그를 비교하여 변경된 부분이 있는지 체크한다.
 const updateElement = ($parentNode, $oldNode, $newNode) => {
   // oldNode만 있는 경우: oldNode를 제거한다.
@@ -56,13 +30,24 @@ const updateElement = ($parentNode, $oldNode, $newNode) => {
     return;
   }
 
-  // oldNoded와 newNode의 태그가 같은 경우, attribute를 비교하여 변경된 부분만 반영한다.
-  // oldNode의 attribute 중 newNode에 없는 것은 모두 제거한다.
-  // newNode의 attribute에서 변경된 내용만 oldNode의 attribute에 반영한다.
-  if ($oldNode.nodeName === $newNode.nodeName) {
-    updateAttribute($oldNode, $newNode);
-    return;
+  // virtualNode에 존재하는 어트리뷰트가 realNode에는 존재하지 않거나 어트리뷰트 값이 같지 않으면 realNode에 해당 어트리뷰트를 추가/변경해 virtualNode와 일치시킨다.
+  for (const { name, value } of [...$newNode.attributes]) {
+    if (!$oldNode.hasAttribute(name) || $oldNode.getAttribute(name) !== value) {
+      $oldNode.setAttribute(name, value);
+    }
   }
+
+  // realNode에 존재하는 어트리뷰트가 virtualNode에는 존재하지 않으면 realNode에서 해당 어트리뷰트를 제거해 virtualNode와 일치시킨다.
+  for (const { name } of [...$oldNode.attributes]) {
+    if (!$newNode.hasAttribute(name)) $oldNode.removeAttribute(name);
+  }
+
+  ['checked', 'value', 'selected'].forEach(key => {
+    // 요소 노드의 타입에 따라 소유하는 DOM 프로퍼티가 다르다. 따라서 해당 key의 프로퍼티가 존재하는지 확인한다.
+    if ($oldNode[key] !== undefined && $newNode[key] !== undefined && $oldNode[key] !== $newNode[key]) {
+      $oldNode[key] = $newNode[key];
+    }
+  });
 
   // eslint-disable-next-line no-use-before-define
   diff($oldNode, $newNode);
@@ -71,11 +56,9 @@ const updateElement = ($parentNode, $oldNode, $newNode) => {
 // 이전DOM과 새롭게 교체할 DOM을 받아서 비교한다.
 const diff = ($OldDOM, $NewDOM) => {
   const [OldDOMNodes, NewDOMNodes] = [[...$OldDOM.childNodes], [...$NewDOM.childNodes]];
-
   const maxLength = Math.max(OldDOMNodes.length, NewDOMNodes.length);
 
   for (let i = 0; i < maxLength; i++) {
-    // 여기서 비교하면서 DOM을 교체해야한다.
     updateElement($OldDOM, OldDOMNodes[i], NewDOMNodes[i]);
   }
 };
