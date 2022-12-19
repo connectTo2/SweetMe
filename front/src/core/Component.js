@@ -21,7 +21,7 @@ class Component {
     if (!events) return;
 
     for (const event of events) {
-      const { type, selector, handler } = event;
+      const { selector, handler } = event;
 
       /**
        * selector가 window거나 null일 경우 event.handler 실행 조건을 추가하는 행위를 하지 않는다.
@@ -37,8 +37,6 @@ class Component {
       // eventHolder에 events와 동일한 내용이 있으면 추가하지 않는다.
       const duplication = eventHolder.find(({ type, selector }) => type === event.type && selector === event.selector);
 
-      // console.log('[중복인거]', duplication);
-
       if (!duplication) {
         /**
          * 이벤트 핸들러 실행조건 추가.
@@ -46,6 +44,7 @@ class Component {
          */
         event.handler = e => {
           e.preventDefault();
+          // FIXME: 라우팅시 이벤트 버그
           if (e.target.closest(selector)) {
             console.log('[notif class]', e.target.attributes.class.value, e.target.classList, e.target.className);
             if (e.target.tagName === 'A') {
