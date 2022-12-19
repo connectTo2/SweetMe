@@ -1,0 +1,18 @@
+.toaster {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  min-width: 45rem;
+  min-height: 18rem;
+  background-color: var(--black);
+}
+
+.signinText {
+  text-align: center;
+  color: var(--white);
+  font-size: var(--size32);
+}
