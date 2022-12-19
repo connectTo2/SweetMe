@@ -22,7 +22,7 @@ class App extends Component {
       { path: /^\/wordlist\/[0-9]+/, page: WordListPage },
       { path: /^\/game$/, page: GamePage },
     ];
-    this.path = '/signin';
+    this.path = window.location.pathname;
   }
 
   /**
@@ -32,8 +32,13 @@ class App extends Component {
    * TODO: 상태로 관리되는 것은 state라고 명시해주는 것이 좋다고 했다. this.path 또한 state로 명시해주는게 좋지 않을까?
    */
   changePath(newPath) {
-    this.path = newPath;
-    window.history.pushState(null, null, this.path);
+    if (newPath === this.path) {
+      window.history.replaceState(null, '', this.path);
+    } else {
+      this.path = newPath;
+      window.history.pushState(null, '', this.path);
+    }
+
     render();
   }
 
@@ -64,6 +69,10 @@ class App extends Component {
       const pageInstance = await new page(url);
       return pageInstance.render();
     })();
+  }
+
+  addEventListener() {
+    return [{ type: 'popstate', selector: 'window', handler: () => this.changePath(window.location.pathname) }];
   }
 }
 
