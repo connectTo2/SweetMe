@@ -6,9 +6,9 @@ class Toaster extends Component {
     const { type, message } = this.props;
 
     return `
-      <article class="${toaster} ${type}">
+      <div class="${toaster} ${type}">
         <p class="${signinText}">${message}</p>
-      </article>
+      </div>
     `;
   }
 }
