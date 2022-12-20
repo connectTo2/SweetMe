@@ -45,7 +45,7 @@ class SignIn extends Component {
         </ul>
         <button type="submit" class="${submitButton} ${fillButton}" disabled>ENTER</button>
       </form>
-      <a href="/signup" class="goToSignUp ${changeSignPage} signin ${outlineButton}">회원가입</a>
+      <a href="/signup" class="goToSignUp ${changeSignPage} ${outlineButton}">회원가입</a>
     `;
   }
 
