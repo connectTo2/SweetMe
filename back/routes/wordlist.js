@@ -7,10 +7,13 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/', (req, res) => {
-  const { voca } = getUserInfo(req, res);
+router.get('/:id', (req, res) => {
+  console.log('[params]', req.params);
+  const { vocaId } = req.params;
+  const { data: usersInfo } = getUserInfo(req, res);
+  const vocaItemInfo = usersInfo.voca.filter(vocaItem => vocaItem.vocaId === vocaId);
 
-  res.send(voca);
+  res.send(vocaItemInfo);
 });
 
 router.post('/', () => {});
