@@ -19,7 +19,7 @@ class App extends Component {
       { path: /^\/signin$/, page: SignInPage },
       { path: /^\/signup$/, page: SignUpPage },
       { path: /^\/wordlist$/, page: WordListPage },
-      { path: /^\/wordlist\/[0-9]+/, page: WordListPage },
+      { path: /^\/wordlist\/[0-9]+$/, page: WordListPage },
       { path: /^\/game$/, page: GamePage },
     ];
     this.path = window.location.pathname;
@@ -44,14 +44,14 @@ class App extends Component {
 
   /** 현재 path를 확인해서 routes 객체에 담긴 컴포넌트의 render 메서드를 호출하고, 반환받은 domString을 모아서 반환하는 함수 */
   render() {
-    console.log('[path]', this.path);
     const { page } = this.routes.find(({ path }) => path.test(this.path));
+    console.log('[path]', this.path);
     console.log('[page]', page);
     /**
      * 서버에 저장되어 있는 단어장(Wordlist)의 경우, vocaId를 사용하기 때문에 /WordList url에 path에 vocaId가 path에 추가되어 들어오게 된다.
      * vocaId만 숫자형태의 문자열로 이뤄져있기 때문에 정규표현식으로 숫자를 검색해서 vocaId를 분리하여 페이지를 호출할 때 props에 추가하여 전달한다.
      */
-    const vocaId = this.path.match(/^[0-9]+$/);
+    const vocaId = this.path.match(/[0-9]+$/)?.at(0);
     const url = vocaId
       ? { path: this.path, vocaId, changePath: this.changePath.bind(this) }
       : { path: this.path, changePath: this.changePath.bind(this) };
@@ -71,7 +71,13 @@ class App extends Component {
   }
 
   addEventListener() {
-    return [{ type: 'popstate', selector: 'window', handler: () => this.changePath(window.location.pathname) }];
+    return [
+      {
+        type: 'popstate',
+        selector: 'window',
+        handler: () => this.changePath(window.location.pathname),
+      },
+    ];
   }
 }
 

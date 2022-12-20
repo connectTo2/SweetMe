@@ -67,16 +67,16 @@ class SignUp extends Component {
         </ul>
         <button type="submit" class="${submitButton} ${fillButton}" disabled>ENTER</button>
       </form> 
-      <a href="/signin" class="${changeSignPage} signup ${outlineButton}">로그인</a>
+      <a href="/signin" class="goToSignIn ${changeSignPage} ${outlineButton}">로그인</a>
     `;
   }
 
   addEventListener() {
     const { valid, postSignUp, changePath } = this.props;
     return [
-      { type: 'input', selector: `.${input}`, handler: valid },
-      { type: 'click', selector: `.${changeSignPage}`, handler: e => changePath(e.target.pathname) },
-      { type: 'click', selector: `.${submitButton}`, handler: postSignUp },
+      { type: 'input', selector: `.signup .${input}`, handler: valid },
+      { type: 'click', selector: `.goToSignIn`, handler: e => changePath(e.target.pathname) },
+      { type: 'click', selector: `.signup .${submitButton}`, handler: postSignUp },
     ];
   }
 }
