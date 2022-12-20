@@ -19,7 +19,7 @@ class VocaListPage extends Component {
     return (async () => {
       try {
         // voca 데이터를 받아온 후 state에 저장한다.
-        const { data: userInfo } = await axios.get('/api');
+        const { data: userInfo } = await axios.get('/');
         const { name, voca } = userInfo;
         this.state = { name, voca, removeKeyword, removeVocaId };
 

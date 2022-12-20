@@ -51,7 +51,7 @@ class SignInPage extends Component {
     const password = document.querySelector('input[name="password"]').value;
 
     try {
-      await axios.post(`/api${this.props.path}`, { email, password });
+      await axios.post(`${this.props.path}`, { email, password });
       console.log('[Toaster] 로그인 성공');
       this.changePath('/');
     } catch (error) {
