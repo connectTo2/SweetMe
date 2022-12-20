@@ -13,13 +13,13 @@ class SignInPage extends Component {
   }
 
   render() {
-    const singin = new SignIn({
+    const singIn = new SignIn({
       valid: _.debounce(this.valid.bind(this), 200),
       postSignIn: this.postSignIn.bind(this),
       changePath: this.changePath,
     }).render();
 
-    return `${singin}`;
+    return `${singIn}`;
   }
 
   // eslint-disable-next-line class-methods-use-this
