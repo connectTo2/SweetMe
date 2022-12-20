@@ -1,1 +1,3 @@
-// WordItem.js
+class WordItem {}
+
+export default WordItem;

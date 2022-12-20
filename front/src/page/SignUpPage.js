@@ -13,13 +13,13 @@ class SignUpPage extends Component {
   }
 
   render() {
-    const signup = new SignUp({
+    const signUp = new SignUp({
       valid: _.debounce(this.valid.bind(this), 200),
       postSignUp: this.postSignUp.bind(this),
       changePath: this.changePath,
     }).render();
 
-    return `${signup}`;
+    return `${signUp}`;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -60,7 +60,7 @@ class SignUpPage extends Component {
     try {
       // prettier-ignore
       await axios.post(
-        `/api${this.props.path}`, 
+        `/${this.props.path}`, 
         { email, userName, password }
       );
       console.log(`[Toaster] ${userName}님의 회원가입이 완료되었습니다!`);

@@ -1,8 +1,13 @@
 /* text */
 .title {
-  margin-bottom: var(--size72);
   font-size: var(--size56);
   font-weight: 700;
+  text-align: center;
+}
+
+.description {
+  display: block;
+  width: 100%;
   text-align: center;
 }
 

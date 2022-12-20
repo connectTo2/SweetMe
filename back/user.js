@@ -57,4 +57,11 @@ const usersInfo = [
   },
 ];
 
-module.exports = usersInfo;
+const findUserInfo = (email, password) => usersInfo.find(user => user.email === email && user.password === password);
+
+const getUsersInfo = () => usersInfo;
+
+module.exports = {
+  findUserInfo,
+  getUsersInfo,
+};

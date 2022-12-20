@@ -1,0 +1,37 @@
+.input {
+  display: block;
+  width: 100%;
+  padding: var(--size8) var(--size32);
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--size12);
+  margin-bottom: var(--size12);
+}
+
+.wordItem {
+  display: flex;
+  height: var(--size80);
+  border: 3px solid var(--black);
+}
+
+.word {
+  width: 16rem;
+}
+
+.addWord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--size80);
+  margin-top: var(--size12);
+  background-color: var(--lightGray);
+}
+
+.addIcon {
+  font-size: var(--size32);
+}
