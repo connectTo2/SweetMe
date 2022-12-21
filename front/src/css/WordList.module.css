@@ -4,6 +4,12 @@
   padding: var(--size8) var(--size32);
 }
 
+.wordList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size12);
+}
+
 .buttonWrapper {
   display: flex;
   align-items: center;
@@ -18,8 +24,19 @@
   border: 3px solid var(--black);
 }
 
-.word {
+.wordInput {
+  flex-shrink: 0;
   width: 16rem;
+}
+
+.removeIcon {
+  display: none;
+  font-size: var(--size32);
+}
+
+.wordItem:hover .removeIcon {
+  display: block;
+  margin-right: var(--size20);
 }
 
 .addWord {

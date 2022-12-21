@@ -75,7 +75,7 @@ class SignUp extends Component {
     const { valid, postSignUp, changePath } = this.props;
     return [
       { type: 'input', selector: `.signup .${input}`, handler: valid },
-      { type: 'click', selector: `.goToSignIn`, handler: e => changePath(e.target.pathname) },
+      { type: 'click', selector: `.${changeSignPage}`, handler: e => changePath(e.target.pathname) },
       { type: 'click', selector: `.signup .${submitButton}`, handler: postSignUp },
     ];
   }

@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const user = require('./user');
+const { findUserInfo } = require('./user');
 
 const app = express();
 
@@ -15,11 +15,6 @@ const app = express();
 app.use(express.json());
 // 쿠키를 사용해 jwt를 사용할 것이기 때문에 cookie-parser 설정
 app.use(cookieParser());
-
-/* -------------------------------- variables ------------------------------- */
-
-// 로그인한 유저 정보를 서버에서 전역 변수로 가지고 있는다.
-let loggedInUserInfo = null;
 
 /* ---------------------------------- auth ---------------------------------- */
 
@@ -33,7 +28,6 @@ const auth = (req, res, next) => {
      * 유효하지 않을 경우 에러를 발생시킨다.
      */
     const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-    loggedInUserInfo = user.findUserInfo(email, password);
 
     console.log('[사용자 인증 성공]', email, password);
     next();
@@ -43,8 +37,19 @@ const auth = (req, res, next) => {
   }
 };
 
+/* -------------------------------- function -------------------------------- */
+
+const getUserInfo = req => {
+  // TODO: cookie와 token을 가져오는 코드는 중복이 아닌가?
+  const { accessToken } = req.cookies;
+  const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+
+  return findUserInfo(email, password);
+};
+
 /* --------------------------------- 주소창 접근 --------------------------------- */
 
+// TODO: 페이지마다 auth를 검사하고 보내주는 데이터가 동일하다... 이것은 중복이 아닌가?
 app.get('/', auth, (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
@@ -62,10 +67,8 @@ app.get('/wordlist/:id', auth, (req, res) => {
 app.use(express.static('dist'));
 
 // vocalist (로그인, root)
-app.get('/api', auth, (req, res) => {
-  // const userInfo = user.findUserInfo('dumdum1@naver.com', '111111')/
-
-  res.send(loggedInUserInfo);
+app.get('/api', (req, res) => {
+  // const userInfo = findUserInfo('dumdum1@naver.com', '111111')/
 });
 
 // signin (로그인)
@@ -75,7 +78,7 @@ app.post('/api/signin', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
-  const userInfo = user.findUserInfo(email, password);
+  const userInfo = findUserInfo(email, password);
 
   if (!userInfo) {
     // 유저가 데이터베이스에 없으면 에러 처리
@@ -118,10 +121,19 @@ app.post('/api/signin', (req, res) => {
 // wordList (단어장)
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
-  console.log(loggedInUserInfo);
+  const userInfo = getUserInfo(req);
 
-  const [vocaItem] = loggedInUserInfo.voca.filter(vocaItem => vocaItem.vocaId === vocaId);
+  const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
   res.send(vocaItem);
+});
+
+app.patch('/api/wordlist/:vocaId', (req, res) => {
+  const { vocaId } = req.params;
+  const newVocaItem = req.body;
+  const userInfo = getUserInfo(req);
+
+  userInfo.voca = userInfo.voca.map(vocaItem => (vocaItem.vocaId === vocaId ? newVocaItem : vocaItem));
+  res.send(newVocaItem);
 });
 
 /* ----------------------------- 지정되지 않은 페이지 접근 ----------------------------- */
