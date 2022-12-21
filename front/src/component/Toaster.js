@@ -6,10 +6,25 @@ class Toaster extends Component {
     const { type, message } = this.props;
 
     return `
-      <div class="${toaster} ${type}">
+      <div class="${toaster} ${type} 'hasDuration'">
         <p class="${signinText}">${message}</p>
+        <button class="closeToaster">X</button>
       </div>
     `;
+  }
+
+  addEventListener() {
+    const pathToMove = this.props.pageUrl;
+
+    return [
+      {
+        type: 'click',
+        selector: 'closeToast',
+        handler: () => {
+          pathToMove ? this.props.changePath(pathToMove) : this.props.setState({ isToastShowing: false });
+        },
+      },
+    ];
   }
 }
 
