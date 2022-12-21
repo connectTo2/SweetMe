@@ -11,13 +11,21 @@ class VocaList extends Component {
     // prettier-ignore
     return `
       <ul class="${vocaList}">
-        ${voca.map(vocaInfo => new VocaItem({...this.props, vocaInfo}).render()).join('')}
         <li class="${plusItem}">
           <a href="/" class="${link}">
             <i class="bx bx-plus ${plusIcon}"></i>
           </a>
         </li>
       </ul>`
+    // return `
+    //   <ul class="${vocaList}">
+    //     ${voca.map(vocaInfo => new VocaItem({...this.props, vocaInfo}).render()).join('')}
+    //     <li class="${plusItem}">
+    //       <a href="/" class="${link}">
+    //         <i class="bx bx-plus ${plusIcon}"></i>
+    //       </a>
+    //     </li>
+    //   </ul>`
   }
 
   addEventListener() {
