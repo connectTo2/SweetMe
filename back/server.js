@@ -10,9 +10,6 @@ const user = require('./user');
 
 const app = express();
 
-// // 유저 정보를 서버에서 전역 변수로 가지고 있는다.
-let userInfo = null;
-
 // <클라이언트에서 서버로 요청이 가능하도록 하는 기본 설정>
 // client와 server간의 통신을 위해 JSON 형식을 다룰거기 때문에 JSON 미들웨어 설치
 app.use(express.json());
@@ -22,6 +19,7 @@ app.use(cookieParser());
 /* ---------------------------------- auth ---------------------------------- */
 
 const auth = (req, res, next) => {
+  console.log(req.path);
   const { accessToken } = req.cookies;
 
   try {
@@ -38,9 +36,38 @@ const auth = (req, res, next) => {
   }
 };
 
+/* --------------------------------- 주소창 접근 --------------------------------- */
+
+app.get('/', auth, (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
+});
+
+app.get('/wordlist', auth, (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
+});
+
+app.get('/wordlist/:id', auth, (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
+});
+
 /* ---------------------------------- route --------------------------------- */
 
-app.post('/signin', (req, res) => {
+app.use(express.static('dist'));
+
+// 유저 정보를 서버에서 전역 변수로 가지고 있는다.
+let userInfo = null;
+
+// vocalist (로그인, root)
+app.get('/api', auth, (req, res) => {
+  // const userInfo = user.findUserInfo('dumdum1@naver.com', '111111')/
+
+  res.send(userInfo);
+});
+
+// signin (로그인)
+app.get('/api/signin', (req, res) => {});
+
+app.post('/api/signin', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
@@ -75,39 +102,38 @@ app.post('/signin', (req, res) => {
     } catch {
       // error가 난 경우 에러 처리
       /**
-       * 토큰 발행이 정상적으로 이루어지지 못했을 경우 status 500을 반환
+       * 토큰 발행이 정상적으로 이루어지지 못했을 경우 status 401을 반환
        * <클라이언트 모든 라우터 공통 사항>
-       * 서버로 요청하여 받은 response 객체의 status가 500일 경우 해당 라우터의 rendering을 중지하고 signIn page를 rendering
+       * 서버로 요청하여 받은 response 객체의 status가 401일 경우 해당 라우터의 rendering을 중지하고 signIn page를 rendering
        */
-      res.status(500).json('Signin Failed');
+      res.status(401).json('Signin Failed');
     }
   }
 });
 
-app.get('/', auth, (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
+// wordList (단어장)
+app.get('/api/wordlist/:vocaId', (req, res) => {
+  const { vocaId } = req.params;
+  console.log(userInfo);
+
+  const [vocaItem] = userInfo.voca.filter(vocaItem => vocaItem.vocaId === vocaId);
+  res.send(vocaItem);
 });
 
-app.use(express.static('dist'));
-
-app.get('/api', auth, (req, res) => {
-  // const userInfo = user.findUserInfo('dumdum1@naver.com', '111111')/
-
-  res.send(userInfo);
-});
-
-app.get('/api/signin', (req, res) => {});
+/* ----------------------------- 지정되지 않은 페이지 접근 ----------------------------- */
 
 /** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
+/* --------------------------------- listen --------------------------------- */
+
 app.listen(process.env.PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
 });
 
-/* -------------------------- require router module ------------------------- *
+/* -------------------------- require router module ------------------------- */
 
 // const signin = require('./routes/signin');
 // const signup = require('./routes/signup');
@@ -116,12 +142,12 @@ app.listen(process.env.PORT, () => {
 // const wordlist = require('./routes/wordlist');
 // const game = require('./routes/game');
 
-// /* ------------------------------- load Router module ------------------------------- */
+/* ------------------------------- load Router module ------------------------------- */
 
-// // /routes -> 각 path의 라우터를 모듈로 생성.
+// /routes -> 각 path의 라우터를 모듈로 생성.
 // app.use('/', vocalist);
 // app.use('/signin', signin);
 // app.use('/signup', signup);
 // app.use('/logout', logout);
-// app.use('/wordlist', wordlist);
+// app.use('/api/wordlist', wordlist);
 // app.use('/game', game);
