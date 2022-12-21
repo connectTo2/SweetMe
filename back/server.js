@@ -81,7 +81,7 @@ app.post('/api/signin', (req, res) => {
     // 유저가 데이터베이스에 없으면 에러 처리
     res.status(403).json('Not Authorized!');
   } else {
-    // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급s
+    // 유저가 있으면 유저 정보를 토대로 AccessToken과 Refreshtoken 발급
     const { id, name, email, password } = userInfo;
 
     try {
