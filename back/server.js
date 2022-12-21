@@ -16,10 +16,15 @@ app.use(express.json());
 // 쿠키를 사용해 jwt를 사용할 것이기 때문에 cookie-parser 설정
 app.use(cookieParser());
 
+/* -------------------------------- variables ------------------------------- */
+
+// 로그인한 유저 정보를 서버에서 전역 변수로 가지고 있는다.
+let loggedInUserInfo = null;
+
 /* ---------------------------------- auth ---------------------------------- */
 
 const auth = (req, res, next) => {
-  console.log(req.path);
+  console.log('[path]', req.path);
   const { accessToken } = req.cookies;
 
   try {
@@ -27,8 +32,10 @@ const auth = (req, res, next) => {
      * jwt.verity는 첫번째 인수, 즉 전달된 토큰을 암호화된 키값으로 유효성 검사를 진행하고, 유효한 경우 디코딩된 페이로드를 반환한다.
      * 유효하지 않을 경우 에러를 발생시킨다.
      */
-    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-    console.log('[사용자 인증 성공]', decoded);
+    const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+    loggedInUserInfo = user.findUserInfo(email, password);
+
+    console.log('[사용자 인증 성공]', email, password);
     next();
   } catch (e) {
     console.error('[사용자 인증 실패]', e);
@@ -54,14 +61,11 @@ app.get('/wordlist/:id', auth, (req, res) => {
 
 app.use(express.static('dist'));
 
-// 유저 정보를 서버에서 전역 변수로 가지고 있는다.
-let userInfo = null;
-
 // vocalist (로그인, root)
 app.get('/api', auth, (req, res) => {
   // const userInfo = user.findUserInfo('dumdum1@naver.com', '111111')/
 
-  res.send(userInfo);
+  res.send(loggedInUserInfo);
 });
 
 // signin (로그인)
@@ -71,7 +75,7 @@ app.post('/api/signin', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
-  userInfo = user.findUserInfo(email, password);
+  const userInfo = user.findUserInfo(email, password);
 
   if (!userInfo) {
     // 유저가 데이터베이스에 없으면 에러 처리
@@ -114,9 +118,9 @@ app.post('/api/signin', (req, res) => {
 // wordList (단어장)
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
-  console.log(userInfo);
+  console.log(loggedInUserInfo);
 
-  const [vocaItem] = userInfo.voca.filter(vocaItem => vocaItem.vocaId === vocaId);
+  const [vocaItem] = loggedInUserInfo.voca.filter(vocaItem => vocaItem.vocaId === vocaId);
   res.send(vocaItem);
 });
 
