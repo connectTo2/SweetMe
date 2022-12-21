@@ -16,3 +16,11 @@
   color: var(--white);
   font-size: var(--size32);
 }
+
+.closeToaster {
+  position: absolute;
+  font-size: var(--size32);
+  color: var(--white);
+  right: var(--size12);
+  top: var(--size12);
+}
