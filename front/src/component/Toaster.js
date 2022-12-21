@@ -1,5 +1,5 @@
+import { toaster, signinText, closeToaster } from '../css/Toaster.module.css';
 import Component from '../core/Component';
-import { toaster, signinText } from '../css/Toaster.module.css';
 
 class Toaster extends Component {
   render() {
@@ -8,8 +8,25 @@ class Toaster extends Component {
     return `
       <div class="${toaster} ${type}">
         <p class="${signinText}">${message}</p>
+        <button class="${closeToaster}">
+          <i class='bx bx-x'></i>
+        </button>
       </div>
     `;
+  }
+
+  addEventListener() {
+    const pathToMove = this.props.pageUrl;
+
+    return [
+      {
+        type: 'click',
+        selector: 'closeToast',
+        handler: () => {
+          pathToMove ? this.props.changePath(pathToMove) : this.props.setState({ isToastShowing: false });
+        },
+      },
+    ];
   }
 }
 
