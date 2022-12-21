@@ -11,7 +11,7 @@ const user = require('./user');
 const app = express();
 
 // // 유저 정보를 서버에서 전역 변수로 가지고 있는다.
-const userInfo = null;
+let userInfo = null;
 
 // <클라이언트에서 서버로 요청이 가능하도록 하는 기본 설정>
 // client와 server간의 통신을 위해 JSON 형식을 다룰거기 때문에 JSON 미들웨어 설치
@@ -33,7 +33,7 @@ const auth = (req, res, next) => {
     console.log('[사용자 인증 성공]', decoded);
     next();
   } catch (e) {
-    console.error('[사용자 인증 실패]');
+    console.error('[사용자 인증 실패]', e);
     return res.redirect('/signin');
   }
 };
@@ -41,7 +41,6 @@ const auth = (req, res, next) => {
 /* ---------------------------------- route --------------------------------- */
 
 app.post('/signin', (req, res) => {
-  console.log('djsldkfjlsd');
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
@@ -86,7 +85,6 @@ app.post('/signin', (req, res) => {
 });
 
 app.get('/', auth, (req, res) => {
-  console.log('직접접근하면 signin으로 가세요');
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
@@ -94,19 +92,14 @@ app.use(express.static('dist'));
 
 app.get('/api', auth, (req, res) => {
   // const userInfo = user.findUserInfo('dumdum1@naver.com', '111111')/
-  console.log('hias');
-  console.log(userInfo);
 
   res.send(userInfo);
 });
 
-app.get('/api/signin', (req, res) => {
-  console.log('his');
-});
+app.get('/api/signin', (req, res) => {});
 
 /** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
 app.get('*', (req, res) => {
-  console.log('여기는 *');
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
