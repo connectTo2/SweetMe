@@ -19,10 +19,8 @@ router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
   const data = getUserInfo(req, res);
-  const { voca } = data;
-  const filteredVoca = voca.filter(item => item.vocaId !== id);
 
-  data.voca = filteredVoca;
+  data.voca = data.voca.filter(item => item.vocaId !== id);
   res.send(data);
 });
 

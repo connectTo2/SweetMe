@@ -10,6 +10,9 @@ const user = require('./user');
 
 const app = express();
 
+// // 유저 정보를 서버에서 전역 변수로 가지고 있는다.
+let userInfo = null;
+
 // <클라이언트에서 서버로 요청이 가능하도록 하는 기본 설정>
 // client와 server간의 통신을 위해 JSON 형식을 다룰거기 때문에 JSON 미들웨어 설치
 app.use(express.json());
@@ -35,32 +38,13 @@ const auth = (req, res, next) => {
   }
 };
 
-/* -------------------------- require router module ------------------------- *
-
-// const signin = require('./routes/signin');
-// const signup = require('./routes/signup');
-// const logout = require('./routes/logout');
-// const vocalist = require('./routes/vocalist');
-// const wordlist = require('./routes/wordlist');
-// const game = require('./routes/game');
-
-// /* ------------------------------- load Router module ------------------------------- */
-
-// // /routes -> 각 path의 라우터를 모듈로 생성.
-// app.use('/', vocalist);
-// app.use('/signin', signin);
-// app.use('/signup', signup);
-// app.use('/logout', logout);
-// app.use('/wordlist', wordlist);
-// app.use('/game', game);
-
 /* ---------------------------------- route --------------------------------- */
 
 app.post('/signin', (req, res) => {
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
-  const userInfo = user.findUserInfo(email, password);
+  userInfo = user.findUserInfo(email, password);
 
   if (!userInfo) {
     // 유저가 데이터베이스에 없으면 에러 처리
@@ -101,21 +85,43 @@ app.post('/signin', (req, res) => {
 });
 
 app.get('/', auth, (req, res) => {
-  const userInfo = user.findUserInfo('dumdum1@naver.com', '111111');
-  res.send(userInfo);
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 app.use(express.static('dist'));
 
-app.get('/signin', (req, res) => {
+app.get('/api', auth, (req, res) => {
+  // const userInfo = user.findUserInfo('dumdum1@naver.com', '111111')/
+
+  res.send(userInfo);
+});
+
+app.get('/api/signin', (req, res) => {});
+
+/** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-/** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
-app.get('*', auth, (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
+app.listen(process.env.PORT, () => {
+  console.log(`http://localhost:${process.env.PORT}`);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`server is on ${process.env.PORT}`);
-});
+/* -------------------------- require router module ------------------------- *
+
+// const signin = require('./routes/signin');
+// const signup = require('./routes/signup');
+// const logout = require('./routes/logout');
+// const vocalist = require('./routes/vocalist');
+// const wordlist = require('./routes/wordlist');
+// const game = require('./routes/game');
+
+// /* ------------------------------- load Router module ------------------------------- */
+
+// // /routes -> 각 path의 라우터를 모듈로 생성.
+// app.use('/', vocalist);
+// app.use('/signin', signin);
+// app.use('/signup', signup);
+// app.use('/logout', logout);
+// app.use('/wordlist', wordlist);
+// app.use('/game', game);
