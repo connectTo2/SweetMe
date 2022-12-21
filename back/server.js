@@ -10,13 +10,6 @@ const user = require('./user');
 
 const app = express();
 
-/**
- * TODO:
- * 예측
- * - 처음에 express에게 app.use(express.static('public'))로 root인 정적파일을 제공하는 로직이 있는데, 우리는 app.get('/')로 요청이 왔을 때 (__dirname, './public/index.html')을 제공할 것이기 때문에 app.use(express.static('public'))을 제공할 필요가 없다고 판단했다.
- */
-app.use(express.static('dist'));
-
 // <클라이언트에서 서버로 요청이 가능하도록 하는 기본 설정>
 // client와 server간의 통신을 위해 JSON 형식을 다룰거기 때문에 JSON 미들웨어 설치
 app.use(express.json());
@@ -26,7 +19,6 @@ app.use(cookieParser());
 /* ---------------------------------- auth ---------------------------------- */
 
 const auth = (req, res, next) => {
-  console.log('[path]', req.path);
   const { accessToken } = req.cookies;
 
   try {
@@ -43,7 +35,8 @@ const auth = (req, res, next) => {
   }
 };
 
-/* -------------------------- require router module ------------------------- */
+/* -------------------------- require router module ------------------------- *
+
 // const signin = require('./routes/signin');
 // const signup = require('./routes/signup');
 // const logout = require('./routes/logout');
@@ -52,6 +45,7 @@ const auth = (req, res, next) => {
 // const game = require('./routes/game');
 
 // /* ------------------------------- load Router module ------------------------------- */
+
 // // /routes -> 각 path의 라우터를 모듈로 생성.
 // app.use('/', vocalist);
 // app.use('/signin', signin);
@@ -63,7 +57,6 @@ const auth = (req, res, next) => {
 /* ---------------------------------- route --------------------------------- */
 
 app.post('/signin', (req, res) => {
-  console.log('[post signin]');
   const { email, password } = req.body;
 
   // 전달받은 email/password로 데이터 베이스를 필터링해서 유저가 데이터베이스에 있는지 확인
@@ -107,33 +100,19 @@ app.post('/signin', (req, res) => {
   }
 });
 
-// TODO: url로 접근했을 때 '/'(root path)로 요청된 get을 읽지 못하는 문제가 있다.
 app.get('/', auth, (req, res) => {
   const userInfo = user.findUserInfo('dumdum1@naver.com', '111111');
   res.send(userInfo);
 });
 
+app.use(express.static('dist'));
+
 app.get('/signin', (req, res) => {
-  console.log('[get signin]');
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-app.get('/signup', auth, (req, res) => {
-  console.log('[get signup]');
-  res.redirect('/');
-});
-
-app.get('/wordlist/:id', (req, res) => {
-  const data = req.params;
-  console.log(data);
-});
-
-/**
- * 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다.
- * - path는 node module에서 제공하는
- */ // TODO: path는 node module에서 제공하는 ...
+/** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
 app.get('*', auth, (req, res) => {
-  console.log('[*]');
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
