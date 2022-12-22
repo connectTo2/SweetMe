@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const { findUserInfo } = require('./user');
+const { findUserInfo, getUsersInfo } = require('./user');
 
 const app = express();
 
@@ -146,21 +146,22 @@ app.post('/api/signin', (req, res) => {
 // POST /api/signup
 app.post('/api/signup', (req, res) => {
   const { email, userName, password } = req.body;
-  const userInfo = findUserInfo(email, password);
+  const userInfo = findUserInfo(email, password) || null;
+  const users = getUsersInfo();
 
-  const generateNextId = () => Math.max(0, ...usersInfo.map(({ userId }) => +userId)) + 1;
+  const generateNextId = () => Math.max(0, ...users.map(({ userId }) => +userId)) + 1;
 
   if (userInfo) {
     res.status(409).json('Signup comflict!');
   } else {
-    // usersInfo.push({
-    //   userId: generateNextId(),
-    //   email,
-    //   name: userName,
-    //   password,
-    //   voca: [],
-    //   wordsCount: 0,
-    // });
+    users.push({
+      userId: generateNextId(),
+      email,
+      name: userName,
+      password,
+      voca: [],
+      wordsCount: 0,
+    });
     res.status(201).json('Signup success!');
   }
 });
