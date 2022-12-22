@@ -41,13 +41,6 @@ class App extends Component {
       ? { path: this.path, vocaId, changePath: this.changePath.bind(this) }
       : { path: this.path, changePath: this.changePath.bind(this) };
 
-    /**
-     * new page()는 promise를 반환한다. 따라서 promise가 successful된 결과인 pageInstance의 render 메서드를 호출하기 위해서는 두 가지 방법이 있다.
-     * 1. App의 render 메서드를 async 함수로 만들고, App의 render 메서드를 호출하는 dom 폴더의 render 함수 또한 async 함수로 만들어 실행 순서를 동기적으로 보장해준다.
-     * 2. App에서 렌더링이 이뤄질 root 요소를 지정하여, then 체이닝을 통해 실행 순서를 보장하는 방법을 이용한다.
-     * 우리는 dom 폴더의 render 함수에 의해 App의 render 메서드가 호출되었을 때 promise가 아닌 domString을 반환해야 하기 때문에 2번의 then 체이닝을 사용할 수 없다.
-     * 따라서 1번 방법을 사용하여, dom 폴더의 render 함수와 App의 render 메서드를 모두 async 함수로 만든다.
-     */
     return (async () => {
       // eslint-disable-next-line new-cap
       const pageInstance = await new page(url);
