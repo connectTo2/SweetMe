@@ -21,6 +21,11 @@
   border: 3px solid var(--black);
 }
 
+.outlineButton.active {
+  color: var(--white);
+  background-color: var(--black);
+}
+
 .fillButton {
   color: var(--white);
   background-color: var(--black);
@@ -31,6 +36,7 @@
   background-color: var(--lightGray);
 }
 
-.fillButton:hover {
+.fillButton:hover,
+.outlineButton.active:hover {
   background-color: var(--darkGray);
 }
