@@ -6,15 +6,11 @@ import { SignUp, hide, submitButton } from '../component/SignUp';
 import { signupSchema } from '../validation/schema';
 import Toaster from '../component/Toaster';
 
-let isToastShowing = false;
-let isResultSuccess = false;
-
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
 
     this.changePath = this.props.changePath;
-    this.state = { isToastShowing, isResultSuccess };
   }
 
   render() {
@@ -26,16 +22,16 @@ class SignUpPage extends Component {
 
     const toaster = new Toaster({
       ...this.state,
-      type: `${this.state.result}`,
-      message: this.state.isResultSuccess ? '회원가입이 성공했습니다.' : '이미 사용중인 이메일 입니다.',
+      type: `${this.state?.result}`,
+      message: this.state?.isResultSuccess ? '회원가입이 성공했습니다.' : '이미 사용중인 이메일 입니다.',
       changePath: this.changePath,
-      pageUrl: this.state.isResultSuccess ? '/signin' : null,
+      pageUrl: this.state?.isResultSuccess ? '/signin' : null,
       changeIsToasterShowing: this.changeIsToasterShowing.bind(this),
     }).render();
 
     return `
       ${signUp}
-      ${this.state.isToastShowing ? toaster : ''}
+      ${this.state?.isToastShowing ? toaster : ''}
       `;
   }
 
@@ -64,9 +60,9 @@ class SignUpPage extends Component {
   }
 
   changeIsToasterShowing(result) {
-    isResultSuccess = result === 'success';
-    isToastShowing = !isToastShowing;
-    this.setState({ isToastShowing });
+    this.isResultSuccess = result === 'success';
+    this.isToastShowing = !this.isToastShowing;
+    this.setState({ isToastShowing: this.isToastShowing });
   }
 
   /**
