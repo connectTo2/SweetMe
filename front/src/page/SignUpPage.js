@@ -29,6 +29,7 @@ class SignUpPage extends Component {
       changeIsToasterShowing: this.changeIsToasterShowing.bind(this),
     }).render();
 
+    // 컴포넌트 만들자!!
     return `
       ${signUp}
       ${this.state?.isToastShowing ? toaster : ''}

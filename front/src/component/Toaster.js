@@ -3,6 +3,7 @@ import Component from '../core/Component';
 
 class Toaster extends Component {
   render() {
+    console.log(this.props);
     const { type, message } = this.props;
 
     return `
