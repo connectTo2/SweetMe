@@ -75,12 +75,11 @@ class WordListPage extends Component {
   }
 
   // WordItem의 x 버튼 클릭시 서버에서 삭제
-  removeWordList(e) {
+  async removeWordList(e) {
     // eslint-disable-next-line no-undef
     const wordId = e.target.closest('li').dataset.id;
-    const newVocaItem = { ...this.state, words: this.state.words.filter(word => word.wordId !== wordId) };
 
-    axios.patch(`/api/wordlist/${this.state.vocaId}`, newVocaItem);
+    const { data: newVocaItem } = await axios.delete(`/api/wordlist/${this.state.vocaId}?wordId=${wordId}`);
     this.setState(newVocaItem);
   }
 }

@@ -158,6 +158,15 @@ app.patch('/api/wordlist/:vocaId', (req, res) => {
   res.send(newVocaItem);
 });
 
+app.delete('/api/wordlist/:vocaId', (req, res) => {
+  const { vocaId } = req.params;
+  const { wordId } = req.query;
+  const userInfo = getUserInfo(req, res);
+  const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
+  vocaItem.words = vocaItem.words.filter(word => word.wordId !== wordId);
+  res.send(vocaItem);
+});
+
 /* ----------------------------- 지정되지 않은 페이지 접근 ----------------------------- */
 
 /** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
