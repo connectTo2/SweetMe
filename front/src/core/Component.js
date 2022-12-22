@@ -29,7 +29,7 @@ class Component {
        * - selecotr가 null인 경우 모든 요소에 동일한 이벤트를 추가하는 것이므로 selector인지 확인하고 handler를 실행할 필요가 없다.
        */
       if (selector === 'window' || selector === null) {
-        eventHolder.push(event);
+        eventHolder.push(event); // window에
         // eslint-disable-next-line no-continue
         continue;
       }

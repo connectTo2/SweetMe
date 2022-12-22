@@ -20,7 +20,7 @@ class VocaItem extends Component {
   }
 
   addEventListener() {
-    const { changePath } = this.props;
+    const { changePath, checkToRemove } = this.props;
 
     return [
       {
@@ -31,8 +31,9 @@ class VocaItem extends Component {
           changePath(`/wordlist/${vocaItemId}`);
         },
       },
+      { type: 'click', selector: `.${remove}`, handler: checkToRemove },
     ];
   }
 }
 
-export { VocaItem, vocaTitle, remove };
+export { VocaItem, vocaTitle };
