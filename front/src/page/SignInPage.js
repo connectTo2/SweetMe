@@ -44,7 +44,6 @@ class SignInPage extends Component {
 
   /* ------------------------------ Event Handler ----------------------------- */
 
-  /** input 이벤트 발생시 유효성 검사를 진행 */
   // eslint-disable-next-line class-methods-use-this
   valid(e) {
     signinSchema[e.target.name].value = e.target.value;
@@ -60,23 +59,16 @@ class SignInPage extends Component {
     this.setState({ isToastShowing });
   }
 
-  /**
-   * - submit 이벤트 발생시 서버에 user인지 확인 요청 보내고
-   * - user면 VocaListPage('/')로 라우팅
-   * - user가 아니면 toaster 메세지 띄우기
-   * TODO: postSignIn라는 네이밍이 괜찮은지 코드 리뷰
-   */
+  // TODO: postSignIn이라는 네이밍이 괜찮은지 코드 리뷰
   async postSignIn() {
     const email = document.querySelector('input[name="email"]').value;
     const password = document.querySelector('input[name="password"]').value;
 
     try {
       await axios.post(`api${this.props.path}`, { email, password });
-      console.log('[Toaster] 로그인 성공');
       this.changePath('/');
     } catch (error) {
       this.changeIsToasterShowing();
-      console.log('[Toaster] 가입된 정보가 없습니다');
     }
   }
 }

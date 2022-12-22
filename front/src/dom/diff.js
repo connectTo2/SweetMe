@@ -1,4 +1,3 @@
-// 모든 태그를 비교하여 변경된 부분이 있는지 체크한다.
 const updateNode = ($parentNode, $oldNode, $newNode) => {
   // oldNode만 있는 경우: oldNode를 제거한다.
   if ($oldNode && !$newNode) {

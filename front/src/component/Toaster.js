@@ -16,17 +16,13 @@ class Toaster extends Component {
   }
 
   addEventListener() {
-    // const pathToMove = this.props.pageUrl;
     const { changePath, changeIsToasterShowing, pageUrl } = this.props;
 
     return [
       {
         type: 'click',
         selector: `.${closeToaster}`,
-        handler: () => {
-          console.log('click x', pageUrl, typeof pageUrl);
-          pageUrl ? changePath(pageUrl) : changeIsToasterShowing();
-        },
+        handler: () => (pageUrl ? changePath(pageUrl) : changeIsToasterShowing()),
       },
     ];
   }

@@ -37,17 +37,15 @@ class VocaListPage extends Component {
   /* --------------------------------- render --------------------------------- */
 
   render() {
-    // user Component
     const user = new User({ ...this.state }).render();
 
-    // VocaList Component
     const vocaList = new VocaList({
       ...this.state,
       changePath: this.changePath,
       checkToRemove: this.checkToRemove.bind(this),
       addVocaItem: this.addVocaItem.bind(this),
       closeModal: this.closeModal.bind(this),
-      removeVocaItem: this.removeVocaItem.bind(this), // 모달 삭제를 위한 이벤트는 vocaList가 가지고 있어야한다.
+      removeVocaItem: this.removeVocaItem.bind(this),
     }).render();
 
     return `

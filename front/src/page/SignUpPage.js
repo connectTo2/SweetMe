@@ -6,6 +6,7 @@ import { SignUp, hide, submitButton } from '../component/SignUp';
 import { signupSchema } from '../validation/schema';
 import Toaster from '../component/Toaster';
 
+// TODO: 리팩토링 필요
 let isToastShowing = false;
 let isResultSuccess = false;
 
@@ -46,7 +47,6 @@ class SignUpPage extends Component {
 
   /* ------------------------------ Event Handler ----------------------------- */
 
-  /** input 이벤트 발생시 유효성 검사를 진행 */
   // eslint-disable-next-line class-methods-use-this
   valid(e) {
     signupSchema[e.target.name].value = e.target.value;
@@ -69,12 +69,7 @@ class SignUpPage extends Component {
     this.setState({ isToastShowing });
   }
 
-  /**
-   * submit 이벤트 발생시 서버에서 이미 회원가입된 유저인지 확인
-   * - 중복된 이메일이면 fail toaster 띄우기
-   * - 새로운 회원이면 success toaster 띄우기
-   * TODO: postSignUp이라는 네이밍이 괜찮은지 코드 리뷰
-   */
+  // TODO: postSignUp이라는 네이밍이 괜찮은지 코드 리뷰
   async postSignUp() {
     const email = signupSchema.email.value;
     const userName = signupSchema.userName.value;

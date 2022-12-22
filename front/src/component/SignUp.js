@@ -73,6 +73,7 @@ class SignUp extends Component {
 
   addEventListener() {
     const { valid, postSignUp, changePath } = this.props;
+
     return [
       { type: 'input', selector: `.signup .${input}`, handler: valid },
       { type: 'click', selector: `.${changeSignPage}`, handler: e => changePath(e.target.pathname) },

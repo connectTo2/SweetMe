@@ -82,9 +82,11 @@ app.get('/api', (req, res) => {
 // POST /api
 app.post('/api', (req, res) => {
   const newVocaItem = req.body;
-  const data = getUserInfo(req, res);
-  data.voca.push(newVocaItem);
-  res.send(data);
+  const userInfo = getUserInfo(req, res);
+
+  userInfo.voca.push(newVocaItem);
+  console.log('[post vocalist]', userInfo.voca);
+  res.send(userInfo);
 });
 
 // vocalist DELETE /:id
@@ -171,6 +173,7 @@ app.post('/api/signup', (req, res) => {
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const userInfo = getUserInfo(req, res);
+  console.log('[get wordlist]', vocaId, userInfo);
 
   const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
   res.send(vocaItem);
@@ -181,6 +184,7 @@ app.patch('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const newVocaItem = req.body;
   const userInfo = getUserInfo(req, res);
+  console.log('[patch vocalist]', vocaId, userInfo);
 
   userInfo.voca = userInfo.voca.map(vocaItem => (vocaItem.vocaId === vocaId ? newVocaItem : vocaItem));
   res.send(newVocaItem);
@@ -190,9 +194,11 @@ app.patch('/api/wordlist/:vocaId', (req, res) => {
 app.delete('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const { wordId } = req.query;
+
   const userInfo = getUserInfo(req, res);
   const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
   vocaItem.words = vocaItem.words.filter(word => word.wordId !== wordId);
+
   res.send(vocaItem);
 });
 
