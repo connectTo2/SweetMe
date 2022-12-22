@@ -11,7 +11,7 @@ class User extends Component {
   }
 
   countWords() {
-    return this.props.map(item => item.words.length).reduce((acc, cur) => acc + cur, 0);
+    return this.props.voca.map(item => item.words.length).reduce((acc, cur) => acc + cur, 0);
   }
 }
 

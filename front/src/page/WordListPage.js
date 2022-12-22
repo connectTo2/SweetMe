@@ -11,7 +11,6 @@ class WordListPage extends Component {
 
   constructor(props) {
     super(props);
-
     // eslint-disable-next-line no-constructor-return
     return (async () => {
       try {
@@ -62,6 +61,7 @@ class WordListPage extends Component {
   // WordList의 + 버튼 클릭 이벤트 발생시 서버에 words 배열에 새로운 word 추가: {wordId: string(날짜), word: '', wordDescription: ''}
   async addWordList() {
     // eslint-disable-next-line no-undef
+
     const wordId = `${Date.now()}`;
     const newVocaItem = { ...this.state, words: [...this.state.words, { wordId, word: '', wordDescription: '' }] };
 
