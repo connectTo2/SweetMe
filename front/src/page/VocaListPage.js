@@ -24,6 +24,7 @@ class VocaListPage extends Component {
       try {
         // voca 데이터를 받아온 후 state에 저장한다.
         const { data: userInfo } = await axios.get('/api');
+        console.log(userInfo);
         const { name, voca } = userInfo;
         this.state = { name, voca, ...vocaItemToRemove };
 
@@ -47,7 +48,7 @@ class VocaListPage extends Component {
       checkToRemove: this.checkToRemove.bind(this),
       addVocaItem: this.addVocaItem.bind(this),
       closeModal: this.closeModal.bind(this),
-      removeVocaItem: this.removeVocaItem.bind(this), // 모달 삭제를 위한 이벤트는 vocaList가 가지고 있어야한다.
+      removeVocaItem: this.removeVocaItem.bind(this),
     }).render();
 
     return `
@@ -70,6 +71,17 @@ class VocaListPage extends Component {
     this.changePath(`/wordlist/${newVocaItem.vocaId}`);
   }
 
+  // 모달 컴포넌트의 '예'를 클릭하면 removeVocaId를 가지고 DELETE 메서드를 요청한다.
+  async removeVocaItem() {
+    const { data: userInfo } = await axios.delete(`/api/${vocaItemToRemove.vocaId}`);
+    const { name, voca } = userInfo;
+
+    vocaItemToRemove.title = '';
+    vocaItemToRemove.vocaId = '';
+
+    this.setState({ name, voca, ...vocaItemToRemove });
+  }
+
   /* ------------------------------- modal Event ------------------------------ */
 
   // x 버튼을 누르면 삭제할 것인지에 한 번 더 확인하는 모달 컴포넌트가 생성되어야 한다.
@@ -84,17 +96,6 @@ class VocaListPage extends Component {
   closeModal() {
     vocaItemToRemove.title = '';
     this.setState({ ...this.state });
-  }
-
-  // 모달 컴포넌트의 '예'를 클릭하면 removeVocaId를 가지고 DELETE 메서드를 요청한다.
-  async removeVocaItem() {
-    const { data: userInfo } = await axios.delete(`/api/${vocaItemToRemove.vocaId}`);
-    const { name, voca } = userInfo;
-
-    vocaItemToRemove.title = '';
-    vocaItemToRemove.vocaId = '';
-
-    this.setState({ name, voca, ...vocaItemToRemove });
   }
 }
 
