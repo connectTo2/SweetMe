@@ -72,12 +72,30 @@ app.use(express.static('dist'));
 
 // vocalist (로그인, root)
 app.get('/api', (req, res) => {
-  // const userInfo = findUserInfo('dumdum1@naver.com', '111111')/
+  const userInfo = getUserInfo(req, res);
+  const { name, voca } = userInfo;
+  res.send({ name, voca });
+});
+
+app.post('/api', (req, res) => {
+  const newVocaItem = req.body;
+  const data = getUserInfo(req, res);
+  data.voca.push(newVocaItem);
+  console.log('[DATA]', data);
+  res.send(data);
+});
+
+// vocalist DELETE /:id
+app.delete('/api/:id', (req, res) => {
+  const { id } = req.params;
+  const data = getUserInfo(req, res);
+
+  data.voca = data.voca.filter(item => item.vocaId !== id);
+  res.send(data);
 });
 
 // signin (로그인)
 app.get('/api/signin', (req, res) => {});
-
 app.post('/api/signin', (req, res) => {
   const { email, password } = req.body;
 
