@@ -1,6 +1,6 @@
 .signform {
   width: 30rem; /* 600px */
-  margin: auto;
+  margin-top: var(--size56);
 }
 
 .signList {
@@ -45,8 +45,8 @@
 
 .changeSignPage {
   position: absolute;
-  right: 0;
-  /* bottom: 100%; */
+  right: -0.15rem;
+  bottom: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

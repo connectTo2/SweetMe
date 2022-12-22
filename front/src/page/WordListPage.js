@@ -31,7 +31,6 @@ class WordListPage extends Component {
       addWordList: this.addWordList.bind(this),
       removeWordList: this.removeWordList.bind(this),
     }).render();
-    console.log('[render]', this.state);
 
     return `${wordList}`;
   }
