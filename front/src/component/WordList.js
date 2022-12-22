@@ -21,7 +21,6 @@ class WordList extends Component {
     const vocaTitle = this.props.title;
     const { vocaDescription, words, removeWordList } = this.props;
     const { currentFilter } = this.state;
-    console.log(currentFilter);
 
     // prettier-ignore
     return `
