@@ -4,22 +4,37 @@ import _ from 'lodash';
 import Component from '../core/Component';
 import { SignIn, hide, submitButton } from '../component/SignIn';
 import { signinSchema } from '../validation/schema';
+import Toaster from '../component/Toaster';
+
+let isToastShowing = false;
 
 class SignInPage extends Component {
   constructor(props) {
     super(props);
 
     this.changePath = this.props.changePath;
+    this.state = { isToastShowing };
   }
 
   render() {
     const singIn = new SignIn({
       valid: _.debounce(this.valid.bind(this), 200),
       postSignIn: this.postSignIn.bind(this),
-      changePath: this.changePath,
+      changePath: this.changePath.bind(this),
     }).render();
 
-    return `${singIn}`;
+    const toaster = new Toaster({
+      ...this.state,
+      type: 'failed',
+      message: '로그인에 실패했습니다',
+      changePath: this.changePath,
+      changeIsToasterShowing: this.changeIsToasterShowing.bind(this),
+    }).render();
+
+    return `
+      ${singIn}
+      ${this.state.isToastShowing ? toaster : ''}
+    `;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -40,6 +55,11 @@ class SignInPage extends Component {
     this.toggleSubmitButton();
   }
 
+  changeIsToasterShowing() {
+    isToastShowing = !isToastShowing;
+    this.setState({ isToastShowing });
+  }
+
   /**
    * - submit 이벤트 발생시 서버에 user인지 확인 요청 보내고
    * - user면 VocaListPage('/')로 라우팅
@@ -55,6 +75,7 @@ class SignInPage extends Component {
       console.log('[Toaster] 로그인 성공');
       this.changePath('/');
     } catch (error) {
+      this.changeIsToasterShowing();
       console.log('[Toaster] 가입된 정보가 없습니다');
     }
   }

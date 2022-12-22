@@ -140,6 +140,28 @@ app.post('/api/signin', (req, res) => {
   }
 });
 
+// signup (회원가입)
+app.post('/api/signup', (req, res) => {
+  const { email, userName, password } = req.body;
+  const userInfo = findUserInfo(email, password);
+
+  const generateNextId = () => Math.max(0, ...usersInfo.map(({ userId }) => +userId)) + 1;
+
+  if (userInfo) {
+    res.status(409).json('Signup comflict!');
+  } else {
+    // usersInfo.push({
+    //   userId: generateNextId(),
+    //   email,
+    //   name: userName,
+    //   password,
+    //   voca: [],
+    //   wordsCount: 0,
+    // });
+    res.status(201).json('Signup success!');
+  }
+});
+
 // wordList (단어장)
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
