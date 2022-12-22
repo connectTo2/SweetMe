@@ -66,22 +66,24 @@ app.get('/wordlist/:id', auth, (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-/* ---------------------------------- route --------------------------------- */
+/* -------------------------------- 정적 파일 제공 -------------------------------- */
 
 app.use(express.static('dist'));
 
-// vocalist (로그인, root)
+/* ---------------------------------- 단어장 목록 route --------------------------------- */
+
+// GET /api
 app.get('/api', (req, res) => {
   const userInfo = getUserInfo(req, res);
   const { name, voca } = userInfo;
   res.send({ name, voca });
 });
 
+// POST /api
 app.post('/api', (req, res) => {
   const newVocaItem = req.body;
   const data = getUserInfo(req, res);
   data.voca.push(newVocaItem);
-  console.log('[DATA]', data);
   res.send(data);
 });
 
@@ -94,8 +96,7 @@ app.delete('/api/:id', (req, res) => {
   res.send(data);
 });
 
-// signin (로그인)
-app.get('/api/signin', (req, res) => {});
+// POST /api/signin
 app.post('/api/signin', (req, res) => {
   const { email, password } = req.body;
 
@@ -140,7 +141,9 @@ app.post('/api/signin', (req, res) => {
   }
 });
 
-// signup (회원가입)
+/* ---------------------------------- 회원가입 route --------------------------------- */
+
+// POST /api/signup
 app.post('/api/signup', (req, res) => {
   const { email, userName, password } = req.body;
   const userInfo = findUserInfo(email, password);
@@ -162,7 +165,9 @@ app.post('/api/signup', (req, res) => {
   }
 });
 
-// wordList (단어장)
+/* ---------------------------------- 단어장 페이지 route --------------------------------- */
+
+// GET /api/wordlist/:vocaId
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const userInfo = getUserInfo(req, res);
@@ -171,6 +176,7 @@ app.get('/api/wordlist/:vocaId', (req, res) => {
   res.send(vocaItem);
 });
 
+// PATCH /api/wordlist/:vocaId
 app.patch('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const newVocaItem = req.body;
@@ -180,6 +186,7 @@ app.patch('/api/wordlist/:vocaId', (req, res) => {
   res.send(newVocaItem);
 });
 
+// DELEATE /api/wordlist/:vocaId
 app.delete('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const { wordId } = req.query;
@@ -192,6 +199,7 @@ app.delete('/api/wordlist/:vocaId', (req, res) => {
 /* ----------------------------- 지정되지 않은 페이지 접근 ----------------------------- */
 
 /** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
+// GET *
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });

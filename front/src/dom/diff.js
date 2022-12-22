@@ -1,5 +1,5 @@
 // 모든 태그를 비교하여 변경된 부분이 있는지 체크한다.
-const updateElement = ($parentNode, $oldNode, $newNode) => {
+const updateNode = ($parentNode, $oldNode, $newNode) => {
   // oldNode만 있는 경우: oldNode를 제거한다.
   if ($oldNode && !$newNode) {
     $parentNode.removeChild($oldNode);
@@ -58,8 +58,9 @@ const diff = ($OldDOM, $NewDOM) => {
   const [OldDOMNodes, NewDOMNodes] = [[...$OldDOM.childNodes], [...$NewDOM.childNodes]];
   const maxLength = Math.max(OldDOMNodes.length, NewDOMNodes.length);
 
+  // maxLength를 구해서 숫자만큼 순회하기 때문에 for문을 사용한다.
   for (let i = 0; i < maxLength; i++) {
-    updateElement($OldDOM, OldDOMNodes[i], NewDOMNodes[i]);
+    updateNode($OldDOM, OldDOMNodes[i], NewDOMNodes[i]);
   }
 };
 
