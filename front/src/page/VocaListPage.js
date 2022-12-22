@@ -38,10 +38,8 @@ class VocaListPage extends Component {
   /* --------------------------------- render --------------------------------- */
 
   render() {
-    // user Component
     const user = new User({ ...this.state }).render();
 
-    // VocaList Component
     const vocaList = new VocaList({
       ...this.state,
       changePath: this.changePath,

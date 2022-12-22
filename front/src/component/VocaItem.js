@@ -16,7 +16,7 @@ class VocaItem extends Component {
           <i class='bx bx-x'></i> 
         </button>
       </li>
-      `;
+    `;
   }
 
   addEventListener() {

@@ -4,7 +4,6 @@ import SignInPage from './page/SignInPage';
 import SignUpPage from './page/SignUpPage';
 import VocaListPage from './page/VocaListPage';
 import WordListPage from './page/WordListPage';
-import GamePage from './page/GamePage';
 
 class App extends Component {
   constructor() {
@@ -20,7 +19,6 @@ class App extends Component {
       { path: /^\/signup$/, page: SignUpPage },
       { path: /^\/wordlist$/, page: WordListPage },
       { path: /^\/wordlist\/[0-9]+$/, page: WordListPage },
-      { path: /^\/game$/, page: GamePage },
       // TODO: Not found
     ];
 

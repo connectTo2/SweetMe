@@ -51,6 +51,7 @@ class SignIn extends Component {
 
   addEventListener() {
     const { valid, postSignIn, changePath } = this.props;
+    
     return [
       { type: 'input', selector: `.signin .${input}`, handler: valid },
       { type: 'click', selector: `.${changeSignPage}`, handler: e => changePath(e.target.pathname) },

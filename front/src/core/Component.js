@@ -23,25 +23,15 @@ class Component {
     for (const event of events) {
       const { selector, handler } = event;
 
-      /**
-       * selector가 window거나 null일 경우 event.handler 실행 조건을 추가하는 행위를 하지 않는다.
-       * - window는 전역 객체로 스코프 체인을 따라 검색해도 closest 메서드가 없기 때문에 selector인지 확인하고 handler를 실행할 필요가 없다.
-       * - selecotr가 null인 경우 모든 요소에 동일한 이벤트를 추가하는 것이므로 selector인지 확인하고 handler를 실행할 필요가 없다.
-       */
       if (selector === 'window' || selector === null) {
-        eventHolder.push(event); // window에
+        eventHolder.push(event);
         // eslint-disable-next-line no-continue
         continue;
       }
 
-      // eventHolder에 events와 동일한 내용이 있으면 추가하지 않는다.
       const duplication = eventHolder.find(({ type, selector }) => type === event.type && selector === event.selector);
 
       if (!duplication) {
-        /**
-         * 이벤트 핸들러 실행조건 추가.
-         * 이벤트 target이 selector 자신이거나 하위 요소인 경우 함수를 호출한다.
-         */
         event.handler = e => {
           e.preventDefault();
           if (e.target.closest(selector)) handler(e);
