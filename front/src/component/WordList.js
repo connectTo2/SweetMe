@@ -1,5 +1,14 @@
 import { title, description, outlineButton, active } from '../css/common.module.css';
-import { input, wordList, buttonWrapper, addWord, addIcon } from '../css/WordList.module.css';
+import {
+  header,
+  input,
+  content,
+  wordList,
+  buttonWrapper,
+  filterButton,
+  addWord,
+  addIcon,
+} from '../css/WordList.module.css';
 import Component from '../core/Component';
 import WordItem from './WordItem';
 
@@ -24,7 +33,7 @@ class WordList extends Component {
 
     // prettier-ignore
     return `
-      <header>
+      <header class=${header}>
         <h2>
           <input
             type="text"
@@ -43,12 +52,12 @@ class WordList extends Component {
         />
       </header>
 
-      <div class="content">
+      <div class="${content}">
         <div class="${buttonWrapper}">
           ${Object.keys(this.filters).map(key => `
             <button 
               type="button" 
-              class="filterButton ${outlineButton} ${this.state.currentFilter === key ? active : ''}"
+              class="${filterButton} ${outlineButton} ${this.state.currentFilter === key ? active : ''}"
               data-filter="${key}"
             >${this.filters[key]}</button>
           `).join('')}
@@ -79,7 +88,7 @@ class WordList extends Component {
     return [
       { type: 'input', selector: `.${input}`, handler: patchWordList },
       { type: 'click', selector: `.${addWord}`, handler: addWordList },
-      { type: 'click', selector: '.filterButton', handler: this.filterWordList.bind(this) },
+      { type: 'click', selector: `.${filterButton}`, handler: this.filterWordList.bind(this) },
     ];
   }
 }
