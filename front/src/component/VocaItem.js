@@ -4,13 +4,13 @@ import { vocaItem, link, vocaTitle, description, remove } from '../css/VocaItem.
 class VocaItem extends Component {
   render() {
     const { title, vocaDescription, vocaId } = this.props.vocaInfo;
-
     // prettier-ignore
+
     return `
       <li data-id="${vocaId}" class="${vocaItem}">
         <a href="/wordlist" class="${link}"> 
-          <h3 class="${vocaTitle}">${title}</h3>
-          <p class="${description}">${vocaDescription}</p>
+          <h3 class="${vocaTitle}">${title || 'untitle'} </h3>
+          <p class="${description}">${vocaDescription || 'untitle'}</p>
         </a>
         <button class="${remove}" >
           <i class='bx bx-x'></i> 
@@ -20,9 +20,18 @@ class VocaItem extends Component {
   }
 
   addEventListener() {
-    const { routeDetailPage } = this.props;
+    const { changePath } = this.props;
 
-    return [{ type: 'click', selector: `.${vocaItem}`, handler: routeDetailPage }];
+    return [
+      {
+        type: 'click',
+        selector: `.${link}`,
+        handler: e => {
+          const vocaItemId = e.target.closest('li').dataset.id;
+          changePath(`/wordlist/${vocaItemId}`);
+        },
+      },
+    ];
   }
 }
 
