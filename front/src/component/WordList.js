@@ -1,12 +1,27 @@
-import { title, description, outlineButton } from '../css/common.module.css';
+import { title, description, outlineButton, active } from '../css/common.module.css';
 import { input, wordList, buttonWrapper, addWord, addIcon } from '../css/WordList.module.css';
 import Component from '../core/Component';
 import WordItem from './WordItem';
 
+let currentFilter = 'all';
+
 class WordList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.filters = {
+      all: '전체',
+      wordOnly: '단어만',
+      descriptionOnly: '뜻만',
+    };
+    this.state = { currentFilter };
+  }
+
   render() {
     const vocaTitle = this.props.title;
     const { vocaDescription, words, removeWordList } = this.props;
+    const { currentFilter } = this.state;
+    console.log(currentFilter);
 
     // prettier-ignore
     return `
@@ -22,7 +37,7 @@ class WordList extends Component {
         </h2>
         <input
           type="text"
-          name="description"
+          name="vocaDescription"
           class="${input} ${description}"
           placeholder="단어장 설명 입력"
           value="${vocaDescription ?? ''}"
@@ -31,17 +46,20 @@ class WordList extends Component {
 
       <div class="content">
         <div class="${buttonWrapper}">
-          <button type="button" class="${outlineButton} full active">전체</button>
-          <button type="button" class="${outlineButton} wordOnly">단어만</button>
-          <button type="button" class="${outlineButton} descriptionOnly">
-            뜻만
-          </button>
+          ${Object.keys(this.filters).map(key => `
+            <button 
+              type="button" 
+              class="filterButton ${outlineButton} ${this.state.currentFilter === key ? active : ''}"
+              data-filter="${key}"
+            >${this.filters[key]}</button>
+          `).join('')}
         </div>
 
         <ul class="${wordList}">
           ${words.map(word => new WordItem({
-              ...word, 
-              removeWordList
+              ...word,
+              removeWordList,
+              currentFilter,
             }).render()).join('')}
         </ul>
 
@@ -52,11 +70,17 @@ class WordList extends Component {
     `;
   }
 
+  filterWordList(e) {
+    currentFilter = e.target.dataset.filter;
+    this.setState({ currentFilter });
+  }
+
   addEventListener() {
     const { patchWordList, addWordList } = this.props;
     return [
       { type: 'input', selector: `.${input}`, handler: patchWordList },
       { type: 'click', selector: `.${addWord}`, handler: addWordList },
+      { type: 'click', selector: '.filterButton', handler: this.filterWordList.bind(this) },
     ];
   }
 }

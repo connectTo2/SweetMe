@@ -52,3 +52,12 @@
 .addIcon {
   font-size: var(--size32);
 }
+
+.covered {
+  color: transparent;
+  background-color: var(--lightGray);
+}
+
+.covered::placeholder {
+  color: transparent;
+}
