@@ -1,3 +1,4 @@
+import { logo, container } from './css/common.module.css';
 import render from './dom/render';
 import Component from './core/Component';
 import SignInPage from './page/SignInPage';
@@ -50,7 +51,13 @@ class App extends Component {
     return (async () => {
       // eslint-disable-next-line new-cap
       const pageInstance = await new page(url);
-      return pageInstance.render();
+
+      return `
+        <h1 class="${logo}">외워VOCA</h1>
+        <section class="${container}">
+          ${pageInstance.render()}
+        </section>
+      `;
     })();
   }
 
