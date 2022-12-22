@@ -10,26 +10,16 @@ const { findUserInfo } = require('./user');
 
 const app = express();
 
-// <클라이언트에서 서버로 요청이 가능하도록 하는 기본 설정>
-// client와 server간의 통신을 위해 JSON 형식을 다룰거기 때문에 JSON 미들웨어 설치
 app.use(express.json());
-// 쿠키를 사용해 jwt를 사용할 것이기 때문에 cookie-parser 설정
 app.use(cookieParser());
 
 /* ---------------------------------- auth ---------------------------------- */
 
 const auth = (req, res, next) => {
-  console.log('[path]', req.path);
   const { accessToken } = req.cookies;
 
   try {
-    /**
-     * jwt.verity는 첫번째 인수, 즉 전달된 토큰을 암호화된 키값으로 유효성 검사를 진행하고, 유효한 경우 디코딩된 페이로드를 반환한다.
-     * 유효하지 않을 경우 에러를 발생시킨다.
-     */
     const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-
-    console.log('[사용자 인증 성공]', email, password);
     next();
   } catch (e) {
     console.error('[사용자 인증 실패]', e);
@@ -40,7 +30,6 @@ const auth = (req, res, next) => {
 /* -------------------------------- function -------------------------------- */
 
 const getUserInfo = (req, res) => {
-  // TODO: cookie와 token을 가져오는 코드는 중복이 아닌가?
   try {
     const { accessToken } = req.cookies;
     const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
@@ -198,8 +187,6 @@ app.delete('/api/wordlist/:vocaId', (req, res) => {
 
 /* ----------------------------- 지정되지 않은 페이지 접근 ----------------------------- */
 
-/** 접근했을 때 로그인된 사용자일 경우 root에 해당하는 html을 파일을 제공해준다. */
-// GET *
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
@@ -209,22 +196,3 @@ app.get('*', (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);
 });
-
-/* -------------------------- require router module ------------------------- */
-
-// const signin = require('./routes/signin');
-// const signup = require('./routes/signup');
-// const logout = require('./routes/logout');
-// const vocalist = require('./routes/vocalist');
-// const wordlist = require('./routes/wordlist');
-// const game = require('./routes/game');
-
-/* ------------------------------- load Router module ------------------------------- */
-
-// /routes -> 각 path의 라우터를 모듈로 생성.
-// app.use('/', vocalist);
-// app.use('/signin', signin);
-// app.use('/signup', signup);
-// app.use('/logout', logout);
-// app.use('/api/wordlist', wordlist);
-// app.use('/game', game);
