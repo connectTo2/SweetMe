@@ -39,12 +39,16 @@ const auth = (req, res, next) => {
 
 /* -------------------------------- function -------------------------------- */
 
-const getUserInfo = req => {
+const getUserInfo = (req, res) => {
   // TODO: cookie와 token을 가져오는 코드는 중복이 아닌가?
-  const { accessToken } = req.cookies;
-  const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+  try {
+    const { accessToken } = req.cookies;
+    const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
 
-  return findUserInfo(email, password);
+    return findUserInfo(email, password);
+  } catch (error) {
+    res.status(404).json('NOT FOUND');
+  }
 };
 
 /* --------------------------------- 주소창 접근 --------------------------------- */
@@ -140,7 +144,7 @@ app.post('/api/signin', (req, res) => {
 // wordList (단어장)
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
-  const userInfo = getUserInfo(req);
+  const userInfo = getUserInfo(req, res);
 
   const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
   res.send(vocaItem);
@@ -149,7 +153,7 @@ app.get('/api/wordlist/:vocaId', (req, res) => {
 app.patch('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const newVocaItem = req.body;
-  const userInfo = getUserInfo(req);
+  const userInfo = getUserInfo(req, res);
 
   userInfo.voca = userInfo.voca.map(vocaItem => (vocaItem.vocaId === vocaId ? newVocaItem : vocaItem));
   res.send(newVocaItem);

@@ -44,7 +44,9 @@ class WordListPage extends Component {
   }
 
   #changeWords(name, value, wordId) {
-    return this.state.words.map(word => (word.wordId === wordId ? { ...word, [name]: value } : { ...word }));
+    return this.state.words.map(word =>
+      word.wordId === wordId ? (value ? { ...word, [name]: value } : { ...word, [name]: '' }) : { ...word }
+    );
   }
 
   // TODO: wordList랑 wordItem이 따로 놈...
@@ -53,8 +55,10 @@ class WordListPage extends Component {
     const { name, value } = e.target;
     const wordId = e.target.closest('li')?.dataset.id;
     const newVocaItem = wordId
-      ? { ...this.vocaItem, words: this.#changeWords(name, value, wordId) }
-      : { ...this.vocaItem, [name]: value };
+      ? { ...this.state, words: this.#changeWords(name, value, wordId) }
+      : value
+      ? { ...this.state, [name]: value }
+      : { ...this.state, [name]: '' };
 
     axios.patch(`/api/wordlist/${this.state.vocaId}`, newVocaItem);
     this.setState(newVocaItem);
@@ -63,7 +67,7 @@ class WordListPage extends Component {
   // WordList의 + 버튼 클릭 이벤트 발생시 서버에 words 배열에 새로운 word 추가: {wordId: string(날짜), word: '', wordDescription: ''}
   addWordList() {
     // eslint-disable-next-line no-undef
-    const wordId = Date.now() + '';
+    const wordId = `${Date.now()}`;
     const newVocaItem = { ...this.state, words: [...this.state.words, { wordId, word: '', wordDescription: '' }] };
 
     axios.patch(`/api/wordlist/${this.state.vocaId}`, newVocaItem);
@@ -79,8 +83,6 @@ class WordListPage extends Component {
     axios.patch(`/api/wordlist/${this.state.vocaId}`, newVocaItem);
     this.setState(newVocaItem);
   }
-
-  // 전체, 단어만, 뜻만 버튼 클릭시 WordList에 출력될 아이템 필터링
 }
 
 export default WordListPage;
