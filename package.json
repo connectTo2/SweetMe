@@ -1,5 +1,5 @@
 {
-  "name": "sweetme",
+  "name": "MemorizeVOCA",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -28,7 +28,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.20",
     "prettier": "2.8.1"
   },
   "dependencies": {

@@ -10,18 +10,16 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  text-decoration: none;
-  color: inherit;
-  padding: 0 1.5rem;
+  padding: 0 var(--size20);
 }
 
 .vocaTitle {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: var(--size22);
+  margin-bottom: var(--size12);
 }
 
 .description {
-  font-size: 1.25rem;
+  font-size: var(--size20);
 }
 
 .vocaTitle,
@@ -34,9 +32,9 @@
 .remove {
   display: none;
   position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 2.5rem;
+  top: var(--size8);
+  right: var(--size8);
+  font-size: var(--size32);
   cursor: pointer;
 }
 

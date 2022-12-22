@@ -24,7 +24,6 @@ class VocaListPage extends Component {
       try {
         // voca 데이터를 받아온 후 state에 저장한다.
         const { data: userInfo } = await axios.get('/api');
-        console.log(userInfo);
         const { name, voca } = userInfo;
         this.state = { name, voca, ...vocaItemToRemove };
 
