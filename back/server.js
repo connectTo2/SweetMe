@@ -146,12 +146,18 @@ app.post('/api/signin', (req, res) => {
 // POST /api/signup
 app.post('/api/signup', (req, res) => {
   const { email, userName, password } = req.body;
-  const userInfo = findUserInfo(email, password) || null;
   const users = getUsersInfo();
+  let isDuplication = false;
+
+  users.forEach(user => {
+    if (user.email === email || user.name === userName) {
+      isDuplication = true;
+    }
+  });
 
   const generateNextId = () => Math.max(0, ...users.map(({ userId }) => +userId)) + 1;
 
-  if (userInfo) {
+  if (isDuplication) {
     res.status(409).json('Signup comflict!');
   } else {
     users.push({
