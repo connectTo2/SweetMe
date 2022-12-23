@@ -4,6 +4,7 @@ import Component from '../core/Component';
 import User from '../component/User';
 import VocaList from '../component/VocaList';
 import { vocaTitle } from '../component/VocaItem';
+import Nav from '../component/Nav';
 
 // vocaItemToRemove를 상태로 관리한다.
 const vocaItemToRemove = {
@@ -24,7 +25,6 @@ class VocaListPage extends Component {
       try {
         // voca 데이터를 받아온 후 state에 저장한다.
         const { data: userInfo } = await axios.get('/api');
-        console.log(userInfo);
         const { name, voca } = userInfo;
         this.state = { name, voca, ...vocaItemToRemove };
 
@@ -38,8 +38,8 @@ class VocaListPage extends Component {
   /* --------------------------------- render --------------------------------- */
 
   render() {
+    const nav = new Nav({ changePath: this.changePath }).render();
     const user = new User({ ...this.state }).render();
-
     const vocaList = new VocaList({
       ...this.state,
       changePath: this.changePath,
@@ -50,6 +50,7 @@ class VocaListPage extends Component {
     }).render();
 
     return `
+      ${nav}
       ${user}
       ${vocaList}
     `;
@@ -95,6 +96,12 @@ class VocaListPage extends Component {
     vocaItemToRemove.title = '';
     this.setState({ ...this.state });
   }
+
+  // /* ----------------------------------- nav ---------------------------------- */
+  // signout() {
+  //   axios.get('/api/signout');
+  //   this.changePath('/signin');
+  // }
 }
 
 export default VocaListPage;
