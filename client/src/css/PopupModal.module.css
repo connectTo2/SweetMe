@@ -1,0 +1,37 @@
+.popupWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  color: var(--white);
+  background-color: var(--black);
+  min-width: 45rem;
+  min-height: 18rem;
+  padding: 4.2rem 7.35rem;
+}
+
+.modalTitle {
+  font-size: var(--size40);
+  margin-bottom: var(--size72);
+}
+
+.outlineButtonDark {
+  border: 2px solid var(--white);
+  min-width: 8.6rem;
+  min-height: var(--size72);
+  font-size: 1.2rem;
+}
+
+.button {
+  display: flex;
+  justify-content: space-around;
+}

@@ -1,0 +1,17 @@
+.nav {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+}
+
+.navList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navLink {
+  width: 7.6rem; /* 152px */
+  height: var(--size64);
+  margin-right: -3px;
+}

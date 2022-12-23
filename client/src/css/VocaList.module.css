@@ -1,0 +1,43 @@
+.vocaList {
+  display: grid;
+  gap: var(--size12);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 5.8rem;
+  padding: 0 var(--size100);
+}
+
+.plusItem {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  max-width: 100%;
+  height: 85px;
+  background: #f7f7f7;
+}
+
+.plusVocaItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  padding: 0 1.5rem;
+}
+
+.plusIcon {
+  display: flex;
+  justify-content: center;
+  font-size: var(--size32);
+}
