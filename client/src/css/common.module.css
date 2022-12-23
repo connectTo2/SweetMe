@@ -38,6 +38,14 @@
 }
 
 /* button */
+.outlineButton,
+.fillButton,
+.ghostButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .outlineButton {
   border: 3px solid var(--black);
 }

@@ -45,7 +45,7 @@
 
 .changeSignPage {
   position: absolute;
-  right: -0.15rem;
+  right: -3px;
   bottom: 100%;
   display: flex;
   justify-content: center;

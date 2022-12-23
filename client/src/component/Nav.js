@@ -1,17 +1,19 @@
 import axios from 'axios';
 import Component from '../core/Component';
+import { outlineButton } from '../css/common.module.css';
+import { nav, navList, navLink } from '../css/Nav.module.css';
 
 class Nav extends Component {
   render() {
     // prettier-ignore
     return `
-      <nav>
-        <ul>
+      <nav class="${nav}">
+        <ul class="${navList}">
           <li>
-            <a href="/" class="link">단어장 목록</a>
+            <a href="/" class="list ${navLink} ${outlineButton}">단어장 목록</a>
           </li>
-          <li >
-           <a href="/signin" class="logout">로그아웃</a>
+          <li>
+           <a href="/signin" class="logout ${navLink} ${outlineButton}">로그아웃</a>
           </li>
         </ul>
       </nav>
@@ -23,7 +25,7 @@ class Nav extends Component {
     return [
       {
         type: 'click',
-        selector: '.link',
+        selector: '.list',
         handler: e => {
           changePath(e.target.pathname);
         },
