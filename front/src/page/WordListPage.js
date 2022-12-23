@@ -3,6 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import Component from '../core/Component';
 import WordList from '../component/WordList';
+import Nav from '../component/Nav';
 
 class WordListPage extends Component {
   state = {};
@@ -25,6 +26,7 @@ class WordListPage extends Component {
   }
 
   render() {
+    const nav = new Nav({ changePath: this.props.changePath }).render();
     const wordList = new WordList({
       ...this.state,
       patchWordList: _.debounce(this.patchWordList.bind(this), 200),
@@ -32,7 +34,10 @@ class WordListPage extends Component {
       removeWordList: this.removeWordList.bind(this),
     }).render();
 
-    return `${wordList}`;
+    return `
+      ${nav}
+      ${wordList}
+    `;
   }
 
   #changeWords(name, value, wordId) {

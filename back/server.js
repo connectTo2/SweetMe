@@ -158,6 +158,12 @@ app.post('/api/signup', (req, res) => {
   }
 });
 
+/* ---------------------------------- 로그아웃 ---------------------------------- */
+app.get('/api/signout', (req, res) => {
+  res.clearCookie('accessToken');
+  res.send('logout');
+});
+
 /* ---------------------------------- 단어장 페이지 route --------------------------------- */
 
 // GET /api/wordlist/:vocaId
