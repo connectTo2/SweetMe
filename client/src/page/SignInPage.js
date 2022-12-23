@@ -3,8 +3,8 @@ import axios from 'axios';
 import _ from 'lodash';
 import Component from '../core/Component';
 import { SignIn, hide, submitButton } from '../component/SignIn';
-import { signinSchema } from '../validation/schema';
 import Toaster from '../component/Toaster';
+import { signinSchema } from '../validation/schema';
 
 let isToastShowing = false;
 
