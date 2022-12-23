@@ -1,0 +1,56 @@
+.signform {
+  width: 30rem; /* 600px */
+  margin-top: var(--size56);
+}
+
+.signList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--size12);
+}
+
+.signItem {
+  position: relative;
+  width: 100%;
+  font-size: var(--size20);
+}
+
+.label {
+  width: 13.2rem; /* 264px */
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  padding: 0 var(--size20);
+  height: var(--size80);
+  border: 3px solid #000;
+}
+
+.error {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.submitButton {
+  width: 100%;
+  height: var(--size80);
+  margin-top: var(--size12);
+  color: var(--white);
+  background-color: var(--black);
+  cursor: pointer;
+}
+
+.changeSignPage {
+  position: absolute;
+  right: -3px;
+  bottom: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7.6rem; /* 152px */
+  height: var(--size64);
+  cursor: pointer;
+}

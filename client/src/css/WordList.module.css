@@ -1,0 +1,80 @@
+.header {
+  width: 100%;
+  padding: 0 var(--size100);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: var(--size8) var(--size32);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size12);
+  width: 100%;
+  margin-top: var(--size56);
+  padding: 0 var(--size100);
+}
+
+.wordList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size12);
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--size12);
+}
+
+.filterButton {
+  width: 6.6rem; /* 132px */
+  height: var(--size64);
+}
+
+.wordItem {
+  display: flex;
+  height: var(--size80);
+  border: 3px solid var(--black);
+}
+
+.wordInput {
+  flex-shrink: 0;
+  width: 16rem;
+}
+
+.removeIcon {
+  display: none;
+  font-size: var(--size32);
+}
+
+.wordItem:hover .removeIcon {
+  display: block;
+  margin-right: var(--size20);
+}
+
+.addWord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--size80);
+  background-color: var(--lightGray);
+}
+
+.addIcon {
+  font-size: var(--size32);
+}
+
+.covered {
+  color: transparent;
+  background-color: var(--lightGray);
+}
+
+.covered::placeholder {
+  color: transparent;
+}
