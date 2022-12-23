@@ -41,6 +41,8 @@ const getUserInfo = (req, res) => {
   }
 };
 
+const generateNextId = usersInfo => Math.max(0, ...usersInfo.map(({ userId }) => +userId)) + 1;
+
 /* --------------------------------- 주소창 접근 --------------------------------- */
 
 // TODO: 페이지마다 auth를 검사하고 보내주는 데이터가 동일하다... 이것은 중복이 아닌가?
@@ -75,11 +77,10 @@ app.post('/api', (req, res) => {
   const userInfo = getUserInfo(req, res);
 
   userInfo.voca.push(newVocaItem);
-  console.log('[post vocalist]', userInfo.voca);
   res.send(userInfo);
 });
 
-// vocalist DELETE /:id
+// DELETE /api/:id
 app.delete('/api/:id', (req, res) => {
   const { id } = req.params;
   const data = getUserInfo(req, res);
@@ -87,6 +88,8 @@ app.delete('/api/:id', (req, res) => {
   data.voca = data.voca.filter(item => item.vocaId !== id);
   res.send(data);
 });
+
+/* ---------------------------------- 로그인 route --------------------------------- */
 
 // POST /api/signin
 app.post('/api/signin', (req, res) => {
@@ -136,22 +139,15 @@ app.post('/api/signin', (req, res) => {
 // POST /api/signup
 app.post('/api/signup', (req, res) => {
   const { email, userName, password } = req.body;
-  const users = getUsersInfo();
-  let isDuplication = false;
 
-  users.forEach(user => {
-    if (user.email === email || user.name === userName) {
-      isDuplication = true;
-    }
-  });
+  const usersInfo = getUsersInfo();
+  const duplication = usersInfo.find(userInfo => userInfo.email === email || userInfo.name === userName);
 
-  const generateNextId = () => Math.max(0, ...users.map(({ userId }) => +userId)) + 1;
-
-  if (isDuplication) {
+  if (duplication) {
     res.status(409).json('Signup comflict!');
   } else {
-    users.push({
-      userId: generateNextId(),
+    usersInfo.push({
+      userId: generateNextId(usersInfo),
       email,
       name: userName,
       password,
@@ -174,7 +170,6 @@ app.get('/api/signout', (req, res) => {
 app.get('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const userInfo = getUserInfo(req, res);
-  console.log('[get wordlist]', vocaId, userInfo);
 
   const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
   res.send(vocaItem);
@@ -185,7 +180,6 @@ app.patch('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
   const newVocaItem = req.body;
   const userInfo = getUserInfo(req, res);
-  console.log('[patch vocalist]', vocaId, userInfo);
 
   userInfo.voca = userInfo.voca.map(vocaItem => (vocaItem.vocaId === vocaId ? newVocaItem : vocaItem));
   res.send(newVocaItem);

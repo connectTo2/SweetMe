@@ -1,7 +1,21 @@
+.header {
+  width: 100%;
+  padding: 0 var(--size100);
+}
+
 .input {
   display: block;
   width: 100%;
   padding: var(--size8) var(--size32);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size12);
+  width: 100%;
+  margin-top: var(--size56);
+  padding: 0 var(--size100);
 }
 
 .wordList {
@@ -15,7 +29,11 @@
   align-items: center;
   justify-content: flex-end;
   gap: var(--size12);
-  margin-bottom: var(--size12);
+}
+
+.filterButton {
+  width: 6.6rem; /* 132px */
+  height: var(--size64);
 }
 
 .wordItem {
@@ -45,7 +63,6 @@
   justify-content: center;
   width: 100%;
   height: var(--size80);
-  margin-top: var(--size12);
   background-color: var(--lightGray);
 }
 

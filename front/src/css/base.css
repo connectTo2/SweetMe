@@ -6,11 +6,14 @@
   --darkGray: #444;
 
   /* size */
+  --size100: 5rem;
   --size80: 4rem;
   --size72: 3.6rem;
+  --size64: 3.2rem;
   --size56: 2.8rem;
   --size40: 2rem;
   --size32: 1.6rem;
+  --size22: 1.1rem;
   --size20: 1rem;
   --size12: 0.6rem;
   --size8: 0.4rem;
@@ -27,6 +30,12 @@ ul {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+  /* font-size: var(--size20); */
+}
+
 input {
   border: 0;
   padding: 0;
@@ -35,6 +44,7 @@ input {
 }
 
 button {
+  padding: 0;
   background-color: transparent;
   border: 0;
   appearance: none;
