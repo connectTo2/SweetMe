@@ -1,8 +1,9 @@
 .vocaItem {
+  position: relative;
   border: 3px solid black;
   overflow-x: auto;
   max-width: 100%;
-  position: relative;
+  height: 5.8rem;
 }
 
 .link {
