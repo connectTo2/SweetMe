@@ -1,10 +1,7 @@
 import { logo, container } from './css/common.module.css';
 import render from './dom/render';
 import Component from './core/Component';
-import SignInPage from './page/SignInPage';
-import SignUpPage from './page/SignUpPage';
-import VocaListPage from './page/VocaListPage';
-import WordListPage from './page/WordListPage';
+import { SignInPage, SignUpPage, VocaListPage, WordListPage } from './page/index';
 
 class App extends Component {
   constructor() {
