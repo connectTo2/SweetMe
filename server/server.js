@@ -48,7 +48,7 @@ const generateNextId = usersInfo => Math.max(0, ...usersInfo.map(({ userId }) =>
 
 /* --------------------------------- 주소창 접근 --------------------------------- */
 
-['/', '/wordlist', '/wordlist:id'].forEach(url => {
+['/', '/wordlist', '/wordlist:vocaId'].forEach(url => {
   app.get(url, auth, (req, res) => {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
   });

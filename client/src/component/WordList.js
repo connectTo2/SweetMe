@@ -84,9 +84,9 @@ class WordList extends Component {
   }
 
   addEventListener() {
-    const { patchWordList, addWordList } = this.props;
+    const { editWordList, addWordList } = this.props;
     return [
-      { type: 'input', selector: `.${input}`, handler: patchWordList },
+      { type: 'input', selector: `.${input}`, handler: editWordList },
       { type: 'click', selector: `.${addWord}`, handler: addWordList },
       { type: 'click', selector: `.${filterButton}`, handler: this.filterWordList.bind(this) },
     ];

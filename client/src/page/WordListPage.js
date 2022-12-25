@@ -28,7 +28,7 @@ class WordListPage extends Component {
     const wordList = new WordList({
       ...this.state,
       addWordList: this.addWordList.bind(this),
-      patchWordList: _.debounce(this.patchWordList.bind(this), 200),
+      editWordList: _.debounce(this.editWordList.bind(this), 200),
       removeWordList: this.removeWordList.bind(this),
     }).render();
 
@@ -39,7 +39,7 @@ class WordListPage extends Component {
   }
 
   // input 이벤트 발생시 단어장 정보 변경
-  async patchWordList(e) {
+  async editWordList(e) {
     const { name, value } = e.target;
 
     // closest('li')가 있다면 단어장 페이지에서 title, description이 아닌 word를 변경하는 input 이벤트이다.
