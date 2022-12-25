@@ -29,7 +29,7 @@ class WordListPage extends Component {
     const nav = new Nav({ changePath: this.props.changePath }).render();
     const wordList = new WordList({
       ...this.state,
-      patchWordList: _.debounce(this.patchWordList.bind(this), 200),
+      editWordList: _.debounce(this.editWordList.bind(this), 200),
       addWordList: this.addWordList.bind(this),
       removeWordList: this.removeWordList.bind(this),
     }).render();
@@ -47,7 +47,7 @@ class WordListPage extends Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  async patchWordList(e) {
+  async editWordList(e) {
     const { name, value } = e.target;
     const wordId = e.target.closest('li')?.dataset.id;
 
