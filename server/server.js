@@ -3,10 +3,9 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const { findUserInfo, getAllInfo } = require('./user');
 
 dotenv.config();
-
-const { findUserInfo, getUsersInfo } = require('./user');
 
 const app = express();
 
@@ -19,8 +18,12 @@ const auth = (req, res, next) => {
   const { accessToken } = req.cookies;
 
   try {
-    const { email, password } = jwt.verify(accessToken, process.env.ACCESS_SECRET);
-    console.log('사용자 인증 성공', email, password);
+    /**
+     * jwt.verity는 첫번째 인수, 즉 전달된 토큰을 암호화된 키값으로 유효성 검사를 진행하고, 유효한 경우 디코딩된 페이로드를 반환한다.
+     * 유효하지 않을 경우 에러를 발생시킨다.
+     */
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+    console.log('[사용자 인증 성공]', decoded);
     next();
   } catch (e) {
     console.error('[사용자 인증 실패]', e);
@@ -45,49 +48,15 @@ const generateNextId = usersInfo => Math.max(0, ...usersInfo.map(({ userId }) =>
 
 /* --------------------------------- 주소창 접근 --------------------------------- */
 
-// TODO: 페이지마다 auth를 검사하고 보내주는 데이터가 동일하다... 이것은 중복이 아닌가?
-app.get('/', auth, (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
-});
-
-app.get('/wordlist', auth, (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
-});
-
-app.get('/wordlist/:id', auth, (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
+['/', '/wordlist', '/wordlist:id'].forEach(url => {
+  app.get(url, auth, (req, res) => {
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
+  });
 });
 
 /* -------------------------------- 정적 파일 제공 -------------------------------- */
 
 app.use(express.static('dist'));
-
-/* ---------------------------------- 단어장 목록 route --------------------------------- */
-
-// GET /api
-app.get('/api', (req, res) => {
-  const userInfo = getUserInfo(req, res);
-  const { name, voca } = userInfo;
-  res.send({ name, voca });
-});
-
-// POST /api
-app.post('/api', (req, res) => {
-  const newVocaItem = req.body;
-  const userInfo = getUserInfo(req, res);
-
-  userInfo.voca.push(newVocaItem);
-  res.send(userInfo);
-});
-
-// DELETE /api/:id
-app.delete('/api/:id', (req, res) => {
-  const { id } = req.params;
-  const data = getUserInfo(req, res);
-
-  data.voca = data.voca.filter(item => item.vocaId !== id);
-  res.send(data);
-});
 
 /* ---------------------------------- 로그인 route --------------------------------- */
 
@@ -140,7 +109,7 @@ app.post('/api/signin', (req, res) => {
 app.post('/api/signup', (req, res) => {
   const { email, userName, password } = req.body;
 
-  const usersInfo = getUsersInfo();
+  const usersInfo = getAllInfo();
   const duplication = usersInfo.find(userInfo => userInfo.email === email || userInfo.name === userName);
 
   if (duplication) {
@@ -159,9 +128,37 @@ app.post('/api/signup', (req, res) => {
 });
 
 /* ---------------------------------- 로그아웃 ---------------------------------- */
+
 app.get('/api/signout', (req, res) => {
   res.clearCookie('accessToken');
   res.send('logout');
+});
+
+/* ---------------------------------- 단어장 목록 route --------------------------------- */
+
+// GET /api
+app.get('/api', (req, res) => {
+  const userInfo = getUserInfo(req, res);
+  const { name, voca } = userInfo;
+  res.send({ name, voca });
+});
+
+// POST /api
+app.post('/api', (req, res) => {
+  const newVocaItem = req.body;
+  const userInfo = getUserInfo(req, res);
+
+  userInfo.voca.push(newVocaItem);
+  res.send(userInfo);
+});
+
+// DELETE /api/:id
+app.delete('/api/:id', (req, res) => {
+  const { id } = req.params;
+  const data = getUserInfo(req, res);
+
+  data.voca = data.voca.filter(item => item.vocaId !== id);
+  res.send(data);
 });
 
 /* ---------------------------------- 단어장 페이지 route --------------------------------- */
@@ -175,14 +172,32 @@ app.get('/api/wordlist/:vocaId', (req, res) => {
   res.send(vocaItem);
 });
 
+// POST /api/wordlist/:vocaId
+app.post('/api/wordlist/:vocaId', (req, res) => {
+  const { vocaId } = req.params;
+  const newWord = req.body;
+  const userInfo = getUserInfo(req, res);
+  const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
+
+  vocaItem.words.push(newWord);
+  res.send(vocaItem);
+});
+
 // PATCH /api/wordlist/:vocaId
 app.patch('/api/wordlist/:vocaId', (req, res) => {
   const { vocaId } = req.params;
-  const newVocaItem = req.body;
+  const { name, value, wordId } = req.body;
   const userInfo = getUserInfo(req, res);
+  const vocaItem = userInfo.voca.find(vocaItem => vocaItem.vocaId === vocaId);
 
-  userInfo.voca = userInfo.voca.map(vocaItem => (vocaItem.vocaId === vocaId ? newVocaItem : vocaItem));
-  res.send(newVocaItem);
+  // wordId가 있다면 vocaItem에서 title, description이 아닌 word에 대한 변경이다.
+  if (wordId) {
+    vocaItem.words = vocaItem.words.map(word => (word.wordId === wordId ? { ...word, [name]: value } : word));
+  } else {
+    vocaItem[name] = value;
+  }
+
+  res.send(vocaItem);
 });
 
 // DELEATE /api/wordlist/:vocaId
