@@ -9,6 +9,15 @@
   padding: var(--size8) var(--size32);
 }
 
+.input:disabled {
+  color: transparent;
+  background-color: var(--lightGray);
+}
+
+.input:disabled::placeholder {
+  color: transparent;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -68,13 +77,4 @@
 
 .addIcon {
   font-size: var(--size32);
-}
-
-.covered {
-  color: transparent;
-  background-color: var(--lightGray);
-}
-
-.covered::placeholder {
-  color: transparent;
 }

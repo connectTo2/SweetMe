@@ -1,4 +1,4 @@
-import { wordItem, input, wordInput, removeIcon, covered } from '../css/WordList.module.css';
+import { wordItem, input, wordInput, removeIcon } from '../css/WordList.module.css';
 import Component from '../core/Component';
 
 class WordItem extends Component {
@@ -10,16 +10,18 @@ class WordItem extends Component {
         <input
           type="text"
           name="word"
-          class="${input} ${wordInput} ${currentFilter === 'descriptionOnly' ? covered : ''}"
+          class="${input} ${wordInput}"
           placeholder="단어 입력"
           value="${word ?? ''}"
+          ${currentFilter === 'descriptionOnly' ? 'disabled' : ''}
         />
         <input
           type="text"
           name="wordDescription"
-          class="${input} wordDescriptionInput ${currentFilter === 'wordOnly' ? covered : ''}"
+          class="${input} wordDescriptionInput"
           placeholder="뜻 입력"
           value="${wordDescription ?? ''}"
+          ${currentFilter === 'wordOnly' ? 'disabled' : ''}
         />
         <button type="button" class="removeWord">
           <i class="bx bx-x ${removeIcon}"></i>
