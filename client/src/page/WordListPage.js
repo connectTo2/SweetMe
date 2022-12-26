@@ -8,8 +8,6 @@ import Nav from '../component/Nav';
 class WordListPage extends Component {
   state = {};
 
-  vocaItem = {};
-
   constructor(props) {
     super(props);
     // eslint-disable-next-line no-constructor-return
@@ -29,8 +27,8 @@ class WordListPage extends Component {
     const nav = new Nav({ changePath: this.props.changePath }).render();
     const wordList = new WordList({
       ...this.state,
-      patchWordList: _.debounce(this.patchWordList.bind(this), 200),
       addWordList: this.addWordList.bind(this),
+      editWordList: _.debounce(this.editWordList.bind(this), 200),
       removeWordList: this.removeWordList.bind(this),
     }).render();
 
@@ -40,46 +38,32 @@ class WordListPage extends Component {
     `;
   }
 
-  #changeWords(name, value, wordId) {
-    return this.state.words.map(word =>
-      word.wordId === wordId ? (value ? { ...word, [name]: value } : { ...word, [name]: '' }) : { ...word }
-    );
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  async patchWordList(e) {
+  // input 이벤트 발생시 단어장 정보 변경
+  async editWordList(e) {
     const { name, value } = e.target;
+
+    // closest('li')가 있다면 단어장 페이지에서 title, description이 아닌 word를 변경하는 input 이벤트이다.
     const wordId = e.target.closest('li')?.dataset.id;
 
-    // wordId가 있을 경우 title, description의 Input이 아니라 단어 각각의 input이다.
-    const newVocaItem = wordId
-      ? { ...this.state, words: this.#changeWords(name, value, wordId) }
-      : value
-      ? { ...this.state, [name]: value }
-      : { ...this.state, [name]: '' };
-
-    const { data: userVocaItem } = await axios.patch(`/api/wordlist/${this.state.vocaId}`, newVocaItem);
-    this.setState(userVocaItem);
+    const { data: vocaItem } = await axios.patch(`/api/wordlist/${this.state.vocaId}`, { name, value, wordId });
+    this.setState(vocaItem);
   }
 
-  // WordList의 + 버튼 클릭 이벤트 발생시 서버에 words 배열에 새로운 word 추가: {wordId: string(날짜), word: '', wordDescription: ''}
+  // WordList의 + 버튼 클릭 이벤트 발생시 새로운 단어 추가
   async addWordList() {
-    // eslint-disable-next-line no-undef
-
     const wordId = `${Date.now()}`;
-    const newVocaItem = { ...this.state, words: [...this.state.words, { wordId, word: '', wordDescription: '' }] };
+    const newWord = { wordId, word: '', wordDescription: '' };
 
-    const { data: userVocaItem } = await axios.patch(`/api/wordlist/${this.state.vocaId}`, newVocaItem);
-    this.setState(userVocaItem);
+    const { data: vocaItem } = await axios.post(`/api/wordlist/${this.state.vocaId}`, newWord);
+    this.setState(vocaItem);
   }
 
-  // WordItem의 x 버튼 클릭시 서버에서 삭제
+  // WordItem의 x 버튼 클릭시 서버에서 wordItem 삭제
   async removeWordList(e) {
-    // eslint-disable-next-line no-undef
     const wordId = e.target.closest('li').dataset.id;
 
-    const { data: newVocaItem } = await axios.delete(`/api/wordlist/${this.state.vocaId}?wordId=${wordId}`);
-    this.setState(newVocaItem);
+    const { data: vocaItem } = await axios.delete(`/api/wordlist/${this.state.vocaId}?wordId=${wordId}`);
+    this.setState(vocaItem);
   }
 }
 
