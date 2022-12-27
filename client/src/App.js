@@ -43,7 +43,9 @@ class App extends Component {
       const pageInstance = await new page(url);
 
       return `
-        <h1 class="${logo}">외워VOCA</h1>
+        <h1 class="logoWrapper">
+          <a href="/" class="${logo} logoLink">외워VOCA</a>
+        </h1>
         <section class="${container}">
           ${pageInstance.render()}
         </section>
@@ -60,6 +62,7 @@ class App extends Component {
    * TODO: 상태로 관리되는 것은 state라고 명시해주는 것이 좋다고 했다. this.path 또한 state로 명시해주는게 좋지 않을까?
    */
   changePath(newPath) {
+    console.log(newPath, this.path);
     if (newPath === this.path) {
       window.history.replaceState(null, '', this.path);
     } else {
@@ -78,6 +81,11 @@ class App extends Component {
         type: 'popstate',
         selector: 'window',
         handler: () => this.changePath(window.location.pathname),
+      },
+      {
+        type: 'click',
+        selector: '.logoLink',
+        handler: e => this.changePath(e.target.pathname),
       },
     ];
   }

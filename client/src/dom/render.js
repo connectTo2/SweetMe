@@ -18,8 +18,8 @@ const bindEventHandler = () => {
 
 /** @type { (RootComponent: class, $container: HTMLElement) => void } */
 const render = async (RootComponent, $container) => {
-  eventHolder.forEach(({ type, handler }, index) => {
-    if (type !== 'popstate') {
+  eventHolder.forEach(({ type, selector, handler }, index) => {
+    if (type !== 'popstate' && selector !== '.logoLink') {
       eventHolder.splice(index, 1);
       $root.removeEventListener(type, handler);
     }
