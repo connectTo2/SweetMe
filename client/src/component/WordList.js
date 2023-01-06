@@ -57,7 +57,7 @@ class WordList extends Component {
           ${Object.keys(this.filters).map(key => `
             <button 
               type="button" 
-              class="${filterButton} ${outlineButton} ${this.state.currentFilter === key ? active : ''}"
+              class="${filterButton} ${outlineButton} ${currentFilter === key ? active : ''}"
               data-filter="${key}"
             >${this.filters[key]}</button>
           `).join('')}

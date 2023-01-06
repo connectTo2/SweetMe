@@ -6,7 +6,7 @@ const signinSchema = {
     get valid() {
       // prettier-ignore
       // eslint-disable-next-line max-len
-      return /^[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*@[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*.[a-z|A-Z]{2,3}$/.test(this.value);
+      return /^[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*@[0-9|a-z|A-Z]([-_.]?[0-9|a-z|A-Z])*\.[a-z|A-Z]{2,3}$/.test(this.value);
     },
   },
   password: {
