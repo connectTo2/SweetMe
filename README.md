@@ -4,7 +4,6 @@
 - 내가 외우고 싶은 단어들을 입력하고 저장하는 단어장 애플리케이션으로, 순수 바닐라자바스크립트를 이용한 SPA
 
 ![외워VOCA](https://user-images.githubusercontent.com/76897813/210952651-e30e6755-f928-4d77-833d-3e1491260e25.gif)
-<br><br>
 
 # 🛠 기술 스택
 
@@ -14,7 +13,6 @@
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
 <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white">
 <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white">
-<br><br>
 
 # 👭 참여 인원 및 구현 기능
 
@@ -66,12 +64,10 @@
     </tr>
   </tbody>
 </table>
-<br><br>
 
 # 🌊 User Flow
 
 <img width="1756" alt="userflow" src="https://user-images.githubusercontent.com/76897813/210955033-fdbae2b2-2f14-4788-89e6-c3b65cd19157.png">
-<br><br>
 
 # 📚 주요 기능
 
@@ -107,7 +103,6 @@
 
 - 로그아웃 버튼 클릭시 발급됐던 로그인 토큰 삭제 후 로그인 페이지로 이동
 - 단어장 목록 버튼 클릭시 단어장 목록 페이지로 이동
-  <br><br>
 
 # 회고
 
